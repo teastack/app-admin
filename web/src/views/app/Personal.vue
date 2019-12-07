@@ -1,8 +1,8 @@
 <template>
-  <div class="app-home">
-    <div id="drag" ref='drag' @click="goHome">
+  <div class="app-personal">
+    <div id="drag_personal" ref='drag_personal' @click="goHome">
       <svg class="icon" aria-hidden="true">
-        <use xlink:href="#icon-icon-test"></use>
+        <use xlink:href="#icon-icon-test1"></use>
       </svg>
     </div>
   </div>
@@ -11,7 +11,7 @@
 <script>
 
 export default {
-  name: 'app-home',
+  name: 'app-personal',
   data () {
     return {
       flag: false,
@@ -32,8 +32,8 @@ export default {
   },
   methods: {
     goHome () {
-      console.log('go个人中心')
-      this.$router.push({name: 'app-personal'})
+      console.log('go首页')
+      this.$router.push({name: 'app-home'})
     },
     down (event) {
       this.flag = true
@@ -45,8 +45,8 @@ export default {
       }
       this.cur.x = touch.clientX
       this.cur.y = touch.clientY
-      this.dx = this.$refs.drag.offsetLeft
-      this.dy = this.$refs.drag.offsetTop
+      this.dx = this.$refs.drag_personal.offsetLeft
+      this.dy = this.$refs.drag_personal.offsetTop
     },
     move (event) {
       if (this.flag) {
@@ -70,8 +70,8 @@ export default {
         } else if (y >= this.clientHeight) {
           y = this.clientHeight
         }
-        this.$refs.drag.style.left = x + 'px'
-        this.$refs.drag.style.top = y + 'px'
+        this.$refs.drag_personal.style.left = x + 'px'
+        this.$refs.drag_personal.style.top = y + 'px'
         // 阻止页面的滑动默认事件
         document.addEventListener('touchmove', function () {
           event.preventDefault()
@@ -87,25 +87,27 @@ export default {
   },
   mounted () {
     console.log('挂载完成')
-    this.clientWidth = document.body.clientWidth - this.$refs.drag.offsetWidth
-    this.clientHeight = document.body.clientHeight - this.$refs.drag.offsetHeight
+    this.clientWidth = document.body.clientWidth - this.$refs.drag_personal.offsetWidth
+    this.clientHeight = document.body.clientHeight - this.$refs.drag_personal.offsetHeight
+    this.$refs.drag_personal.style.left = this.clientWidth + 'px'
+    this.$refs.drag_personal.style.top = 0 + 'px'
     const _this = this
-    this.$refs.drag.addEventListener('mousedown', function (e) {
+    this.$refs.drag_personal.addEventListener('mousedown', function (e) {
       _this.down(e)
     }, false)
-    this.$refs.drag.addEventListener('touchstart', function (e) {
+    this.$refs.drag_personal.addEventListener('touchstart', function (e) {
       _this.down(e)
     }, false)
-    this.$refs.drag.addEventListener('mousemove', function (e) {
+    this.$refs.drag_personal.addEventListener('mousemove', function (e) {
       _this.move(e)
     }, false)
-    this.$refs.drag.addEventListener('touchmove', function (e) {
+    this.$refs.drag_personal.addEventListener('touchmove', function (e) {
       _this.move(e)
     }, false)
-    this.$refs.drag.addEventListener('mouseup', function (e) {
+    this.$refs.drag_personal.addEventListener('mouseup', function (e) {
       _this.end(e)
     }, false)
-    this.$refs.drag.addEventListener('touchend', function (e) {
+    this.$refs.drag_personal.addEventListener('touchend', function (e) {
       _this.end(e)
     }, false)
   }
@@ -114,7 +116,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
-#drag {
+#drag_personal {
   position: absolute;
 }
 </style>

@@ -1,8 +1,8 @@
 import { Controller } from 'egg';
 
-export default class HomeController extends Controller {
+export default class LoginController extends Controller {
   public async index() {
     const { ctx } = this;
-    ctx.body = '登录';
+    ctx.body = 'egg';
   }
 }

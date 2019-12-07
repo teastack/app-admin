@@ -5,6 +5,7 @@ import 'egg';
 import ExportHome from '../../../app/controller/home';
 import ExportLogin from '../../../app/controller/login';
 import ExportAdminUser from '../../../app/controller/admin/user';
+import ExportAppHome from '../../../app/controller/app/home';
 
 declare module 'egg' {
   interface IController {
@@ -12,6 +13,9 @@ declare module 'egg' {
     login: ExportLogin;
     admin: {
       user: ExportAdminUser;
+    }
+    app: {
+      home: ExportAppHome;
     }
   }
 }

@@ -10,8 +10,8 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'app-home',
-      component: resolve => require(['@/views/app/Home'], resolve),
+      name: 'app-loyou',
+      component: resolve => require(['@/views/app/Loyou'], resolve),
       redirect: {'name': 'app-home'},
       children: [
         ...app
@@ -19,8 +19,8 @@ export default new Router({
     },
     {
       path: '/admin',
-      name: 'admin-home',
-      component: resolve => require(['@/views/admin/Home'], resolve),
+      name: 'admin-Loyou',
+      component: resolve => require(['@/views/admin/Loyou'], resolve),
       redirect: {'name': 'admin-home'},
       children: [
         ...admin

@@ -1,17 +1,14 @@
 <template>
-  <div id="app">
+  <div>
     <router-view/>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'App'
+  name: 'app-loyou'
 }
 </script>
 
 <style>
-#app {
-  position: relative;
-}
 </style>

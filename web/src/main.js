@@ -3,6 +3,8 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import '@/assets/style/index.less'
+import '@/assets/style/iconfont/iconfont'
 
 // 导入vantUI框架组件
 import Vant from 'vant'
