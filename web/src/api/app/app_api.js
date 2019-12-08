@@ -6,6 +6,13 @@ const getUserList = (params) => {
   })
 }
 
+const login = (params) => {
+  return axios.post('login', params).then((result) => {
+    return result.data
+  })
+}
+
 export default {
-  getUserList
+  getUserList,
+  login
 }

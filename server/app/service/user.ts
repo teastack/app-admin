@@ -17,5 +17,17 @@ export default class User extends Service {
     }
   }
 
+    /**
+   * 用户登录
+   */
+  async login() {
+    const res = await this.app.mysql.select('user');
+    return {
+        code: 200,
+        data: res,
+        desc: '获取用户列表成功'
+    }
+  }
+
 }
 
