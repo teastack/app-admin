@@ -10,6 +10,18 @@ export default (appInfo: EggAppInfo) => {
   // add your egg config in here
   config.middleware = [];
 
+  config.jwt = {
+    secret: "jamin"//自定义 token 的加密条件字符串
+  };
+
+  config.security = {
+    csrf: {
+      enable: false,
+      ignoreJSON: true
+    },
+    domainWhiteList: ['*'],//允许访问接口的白名单
+  };
+
   // 数据库配置
     config.mysql = {
       // 单数据库信息配置

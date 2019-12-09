@@ -5,6 +5,10 @@ const plugin: EggPlugin = {
     enable: true,
     package: 'egg-mysql'
   },
+  jwt: {
+    enable: true,
+    package: "egg-jwt"
+  },
   cors: {
     enable: true,
     package: 'egg-cors'

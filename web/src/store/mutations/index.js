@@ -3,7 +3,7 @@ const mutations = {
     state.userInfo = data
   },
   mytoken (state, data) {
-    state.mytoken = data
+    state.token = data
   }
 }
 

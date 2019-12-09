@@ -13,4 +13,9 @@ declare module 'egg' {
     interface Application {
         mysql: mysql;
     }
+
+    // ts jwt
+    interface Application {
+        jwt: any;
+    }
 }

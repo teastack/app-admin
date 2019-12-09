@@ -1,6 +1,8 @@
 import axios from 'axios'
 import adminApi from './admin/admin_api'
 import appApi from './app/app_api'
+// 引入store
+import store from '@/store'
 
 // api基准路径
 const baseURL = 'http://127.0.0.1:7001/'
@@ -13,11 +15,11 @@ axios.interceptors.request.use(function (config) {
   // 在请求发送之前你想做的事情
   // 我们要将token这个值通过请求头的方式传递给服务器
   // 1.获取token
-  const token = localStorage.getItem('mytoken')
+  const token = store.getters.mytoken
   if (token) {
     // 2.将值传递到服务器
     // console.log(config):Authorization是后台接口与前台调用约定好的值，不能随意修改
-    config.headers['Authorization'] = token
+    config.headers['Authorization'] = `Bearer ${token}`
   }
   return config
 }, function (error) {

@@ -3,7 +3,7 @@ const getters = {
     return state.userInfo
   },
   mytoken (state) {
-    return state.mytoken
+    return state.token
   }
 }
 
