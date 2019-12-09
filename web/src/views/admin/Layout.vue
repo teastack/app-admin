@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'app-loyou'
+  name: 'admin-layout'
 }
 </script>
 
