@@ -11,11 +11,11 @@ export default {
   name: 'app-login',
   data () {
     return {
-      msg: 'app登录'
     }
   },
   methods: {
     login () {
+      // console.log(this.$store.state.userInfo)
       console.log('login')
       const userInfo = {
         user_name: 'jack',

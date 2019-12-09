@@ -13,6 +13,9 @@ import 'vant/lib/index.css'
 import ViewUI from 'view-design'
 import 'view-design/dist/styles/iview.css'
 
+// 引入store
+import store from '@/store'
+
 Vue.use(Vant)
 Vue.use(ViewUI)
 
@@ -45,6 +48,7 @@ router.beforeEach((to, from, next) => {
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })
