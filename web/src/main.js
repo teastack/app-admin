@@ -21,7 +21,7 @@ Vue.config.productionTip = false
 // 添加路由全局守卫
 router.beforeEach((to, from, next) => {
   // 判断是app还是后台管理
-  const isAdmin = to.path.indexOf('admin') ? 1 : 0
+  const isAdmin = to.path.indexOf('admin') > -1 ? 1 : 0
   // 1.获取令牌：token
   var token = localStorage.getItem('mytoken')
   // 如果token有值，说明曾经登陆地 ，说明拥有合法访问的令牌
