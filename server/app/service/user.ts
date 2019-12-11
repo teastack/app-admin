@@ -1,18 +1,15 @@
 import { Service } from 'egg';
 
-/**
- * Test Service
- */
 export default class User extends Service {
 
   /**
    * 获取用户列表
    */
-  async getUserList() {
-    const res = await this.app.mysql.select('user');
+  async List() {
+    const result: any = await this.ctx.model.User.findAll({attributes: ['id', 'user_name', 'nick_name', 'mobile_phone', 'email', 'creation_time', 'update_time']});
     return {
         code: 200,
-        data: res,
+        data: result,
         msg: '获取用户列表成功'
     }
   }
