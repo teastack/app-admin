@@ -22,7 +22,10 @@
         />
       </van-cell-group>
 
-      <van-button slot="button" size="small" type="primary" class="login" @click="login">登录</van-button>
+      <div>
+        <van-button slot="button" size="small" type="primary" class="login" @click="login">登录</van-button>
+        <a class="register fr" @click="$router.push({name: 'app-register'})">注册</a>
+      </div>
     </div>
   </div>
 </template>
@@ -78,6 +81,11 @@ export default {
       left: 1rem;
       .login {
         margin-top: .3rem;
+      }
+      .register {
+        margin-top: .3rem;
+        line-height: 28px;
+        margin-right: 0.8rem;
       }
     }
 }
