@@ -70,6 +70,8 @@
 </template>
 
 <script>
+import Api from '@/api'
+
 export default {
   name: 'app-register',
   data () {
@@ -140,12 +142,20 @@ export default {
       this.userInfo = {
         user_name: 'jack',
         nick_name: 'aa',
-        mobile_phone: '13822267304',
+        mobile_phone: '1382226730',
         pass_word: '123456'
       }
       let Obj = Object.assign({}, this.userInfo)
       delete Obj.pass_word2
       console.log(Obj)
+      Api.appApi.register(Obj).then(res => {
+        console.log(res)
+        if (res.code === 200) {
+          this.$notify({ type: 'success', message: `${res.msg}` })
+        } else {
+          this.$notify({ type: 'primary', message: `${res.msg}` })
+        }
+      })
     },
     // 能否进去注册
     registerOk () {
