@@ -76,6 +76,7 @@ export default class User extends Service {
     user_name: parameter.user_name,
     pass_word: parameter.pass_word,
     nick_name: parameter.nick_name,
+    stauts: '1',
     mobile_phone: parameter.mobile_phone
   });
   if (!result) {

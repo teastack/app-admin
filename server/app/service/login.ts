@@ -18,7 +18,13 @@ export default class Login extends Service {
     });
     if (repeatedData && repeatedData.length > 0) {
       const pass_word = md5.update(data.pass_word).digest('hex');
-      if (pass_word !== repeatedData[0].pass_word) {
+      if (repeatedData[0].stauts === '0') {
+        return {
+          code: 999,
+          data: [],
+          msg: '用户已注销'
+         }
+      } else if (pass_word !== repeatedData[0].pass_word) {
         return {
           code: 999,
           data: [],
