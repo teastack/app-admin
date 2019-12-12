@@ -140,14 +140,13 @@ export default {
     //     return
     //   }
       this.userInfo = {
-        user_name: 'jack',
+        user_name: 'jack14',
         nick_name: 'aa',
-        mobile_phone: '1382226730',
+        mobile_phone: '13822267306',
         pass_word: '123456'
       }
       let Obj = Object.assign({}, this.userInfo)
       delete Obj.pass_word2
-      console.log(Obj)
       Api.appApi.register(Obj).then(res => {
         console.log(res)
         if (res.code === 200) {
