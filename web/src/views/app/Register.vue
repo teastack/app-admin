@@ -156,7 +156,7 @@ export default {
           }).then(res => {
             if (res.code === 200) {
               // 储存token
-              this.$store.commit('mytoken', res.data[0].token)
+              localStorage.setItem('token', `Bearer ${res.data[0].token}`)
               this.$store.commit('userInfo', res.data[0].user_info)
               // 延迟2S跳转首页
               const _this = this

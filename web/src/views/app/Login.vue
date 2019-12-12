@@ -59,7 +59,7 @@ export default {
           if (res.code === 200) {
             this.$notify({ type: 'success', message: `${res.msg}` })
             // 储存token
-            this.$store.commit('mytoken', res.data[0].token)
+            localStorage.setItem('token', `Bearer ${res.data[0].token}`)
             this.$store.commit('userInfo', res.data[0].user_info)
             this.$router.push({name: 'app-home'})
           } else {
