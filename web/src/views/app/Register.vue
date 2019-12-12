@@ -135,22 +135,36 @@ export default {
     },
     // 注册
     goRegister () {
-    //   const registerOk = this.registerOk()
-    //   if (!registerOk) {
-    //     return
-    //   }
+      const registerOk = this.registerOk()
+      if (!registerOk) {
+        return
+      }
       this.userInfo = {
-        user_name: 'jack14',
+        user_name: 'jack17',
+        pass_word: '123456',
         nick_name: 'aa',
-        mobile_phone: '13822267306',
-        pass_word: '123456'
+        mobile_phone: '13822267309'
       }
       let Obj = Object.assign({}, this.userInfo)
       delete Obj.pass_word2
       Api.appApi.register(Obj).then(res => {
-        console.log(res)
         if (res.code === 200) {
           this.$notify({ type: 'success', message: `${res.msg}` })
+          Api.appApi.login({
+            user_name: this.userInfo.user_name,
+            pass_word: this.userInfo.pass_word
+          }).then(res => {
+            if (res.code === 200) {
+              // 储存token
+              this.$store.commit('mytoken', res.data[0].token)
+              // 延迟2S跳转首页
+              const _this = this
+              setTimeout(() => {
+                _this.$router.push({name: 'app-home'})
+                _this.$notify({ type: 'success', message: `${res.msg}` })
+              }, 2000)
+            }
+          })
         } else {
           this.$notify({ type: 'primary', message: `${res.msg}` })
         }
