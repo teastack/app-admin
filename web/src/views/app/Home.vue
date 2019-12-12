@@ -1,8 +1,8 @@
 <template>
   <div class="app-home">
-    <div id="drag" ref='drag' @click="goHome">
+    <div id="drag" ref='drag' @click="goPersonal">
       <svg class="icon" aria-hidden="true">
-        <use xlink:href="#icon-icon-test"></use>
+        <use xlink:href="#icon-icon-test1"></use>
       </svg>
     </div>
   </div>
@@ -31,8 +31,7 @@ export default {
     }
   },
   methods: {
-    goHome () {
-      console.log('go个人中心')
+    goPersonal () {
       this.$router.push({name: 'app-personal'})
     },
     down (event) {
@@ -85,9 +84,10 @@ export default {
   created () {
   },
   mounted () {
-    console.log('挂载完成')
     this.clientWidth = document.body.clientWidth - this.$refs.drag.offsetWidth
     this.clientHeight = document.body.clientHeight - this.$refs.drag.offsetHeight
+    this.$refs.drag.style.left = this.clientWidth + 'px'
+    this.$refs.drag.style.top = 0 + 'px'
     const _this = this
     this.$refs.drag.addEventListener('mousedown', function (e) {
       _this.down(e)
