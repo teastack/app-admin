@@ -1,6 +1,4 @@
 export default {
-  userInfo: {
-    user_name: 'jack'
-  },
+  userInfo: {},
   token: ''
 }

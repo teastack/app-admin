@@ -21,6 +21,15 @@ Vue.use(ViewUI)
 
 Vue.config.productionTip = false
 
+// 在页面加载时读取localStorage里的状态信息
+if (localStorage.getItem('data')) {
+  store.replaceState(Object.assign({}, store.state, JSON.parse(localStorage.getItem('data'))))
+}
+// 页面刷新把vuex里面的数据储存到localStorage
+window.addEventListener('beforeunload', () => {
+  localStorage.setItem('data', JSON.stringify(store.state))
+})
+
 // 添加路由全局守卫
 router.beforeEach((to, from, next) => {
   // 判断是app还是后台管理
