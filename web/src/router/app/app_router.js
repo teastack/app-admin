@@ -18,5 +18,10 @@ export default [
     path: 'personal',
     name: 'app-personal',
     component: resolve => require(['@/views/app/Personal'], resolve)
+  },
+  {
+    path: 'message',
+    name: 'app-message',
+    component: resolve => require(['@/views/app/HomeDetailed/message'], resolve)
   }
 ]

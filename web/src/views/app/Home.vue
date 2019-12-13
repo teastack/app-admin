@@ -1,7 +1,7 @@
 <template>
   <div class="app-home">
     <move-ico :ico="ico" @click.native="goPersonal"></move-ico>
-    <van-icon name="add-o" class="add-ico"/>
+    <van-icon name="add-o" class="add-ico" @click="goMessage"/>
   </div>
 </template>
 
@@ -20,8 +20,13 @@ export default {
     moveIco
   },
   methods: {
+    // 个人中心
     goPersonal () {
       this.$router.push({name: 'app-personal'})
+    },
+    // 留言编辑
+    goMessage () {
+      this.$router.push({name: 'app-message'})
     }
   },
   created () {
