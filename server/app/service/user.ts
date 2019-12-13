@@ -6,6 +6,8 @@ export default class User extends Service {
    * 获取用户列表
    */
   public async List() {
+    // console.log(this.ctx.state.user);     创建时间          过期时间 
+    // 获取jwt信息 { username: 'jack14', iat: 1576138427, exp: 1576224827 }
     const result: any = await this.ctx.model.User.findAll({
       // 属性查询字段
       attributes: ['id', 'user_name', 'nick_name', 'mobile_phone', 'email', 'creation_time', 'update_time'],

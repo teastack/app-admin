@@ -34,7 +34,7 @@ export default class Login extends Service {
         // 生成token
         const token = this.app.jwt.sign({
           username: data.user_name, //需要存储的 token 数据
-        }, this.app.config.jwt.secret,{expiresIn: '24h'});
+        }, this.app.config.jwt.secret);
         // 返回 token 到前端
         // 去除密码返回信息前端
         const { ...result } = repeatedData[0];
