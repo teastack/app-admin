@@ -139,12 +139,6 @@ export default {
       if (!registerOk) {
         return
       }
-      this.userInfo = {
-        user_name: 'jack17',
-        pass_word: '123456',
-        nick_name: 'aa',
-        mobile_phone: '13822267309'
-      }
       let Obj = Object.assign({}, this.userInfo)
       delete Obj.pass_word2
       Api.appApi.register(Obj).then(res => {
@@ -163,7 +157,7 @@ export default {
               setTimeout(() => {
                 _this.$router.push({name: 'app-home'})
                 _this.$notify({ type: 'success', message: `${res.msg}` })
-              }, 2000)
+              }, 1500)
             }
           })
         } else {
@@ -186,6 +180,7 @@ export default {
         this.pass_word2Error = '与第一次密码不一致'
         return false
       }
+      return true
     }
   }
 }
