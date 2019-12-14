@@ -8,9 +8,6 @@
 
     <!-- 信息内容输入区 -->
     <div class="message">
-      <!-- <van-cell-group>
-        <van-field v-model="message" placeholder="君, 此刻的心情..." />
-      </van-cell-group> -->
       <textarea class="textarea" autofocus="autofocus" maxlength="240" v-model="message" placeholder="君, 此刻的心情..."></textarea>
       <p class="message-max-length">{{messageLength}} / {{messageMaxLength}}</p>
     </div>
@@ -27,11 +24,13 @@
 </template>
 
 <script>
+
+import Api from '@/api'
 export default {
   name: 'app-message',
   data () {
     return {
-      message: '',
+      message: '君, 此刻的心情...',
       messageLength: 0,
       messageMaxLength: 240,
       fileList: []
@@ -48,14 +47,26 @@ export default {
   methods: {
     // 提交发表
     submit () {
-      console.log(this.fileList)
       let imgArr = []
+      let messageInfo = {}
       for (const key in this.fileList) {
         if (this.fileList.hasOwnProperty(key)) {
           imgArr.push(this.fileList[key].content)
         }
       }
-      console.log(imgArr)
+      messageInfo.message = this.message
+      messageInfo.img_arr = imgArr
+      Api.appApi.addMssageInfo(messageInfo).then(res => {
+        if (res.code === 200) {
+          let _this = this
+          setTimeout(() => {
+            _this.$router.push({name: 'app-home'})
+            _this.$notify({ type: 'success', message: `${res.msg}` })
+          }, 1500)
+        } else {
+          this.$notify({ type: 'primary', message: `${res.msg}` })
+        }
+      })
     },
     // 图片校验
     beforeRead (file) {
@@ -65,6 +76,8 @@ export default {
       }
       return true
     }
+  },
+  created () {
   }
 }
 </script>

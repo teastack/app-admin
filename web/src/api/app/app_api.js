@@ -1,11 +1,5 @@
 import axios from 'axios'
 
-const getUserList = (params) => {
-  return axios.get('user_list', params).then((result) => {
-    return result.data
-  })
-}
-
 // 用户登录
 const login = (params) => {
   return axios.post('login', params).then((result) => {
@@ -20,8 +14,15 @@ const register = (params) => {
   })
 }
 
+// 添加留言信息
+const addMssageInfo = (params) => {
+  return axios.post('add_message', params).then((result) => {
+    return result.data
+  })
+}
+
 export default {
-  getUserList,
   login,
-  register
+  register,
+  addMssageInfo
 }

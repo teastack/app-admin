@@ -24,10 +24,10 @@ export default class User extends Service {
   * 注册
   */ 
  public async register() {
-  const { Op } = this.app.Sequelize;
-  const crypto = require('crypto');
+  const { Op } = this.app.Sequelize;  // 导入Sequelize的mysql查询语句eg：or，and
+  const crypto = require('crypto');  // 导入加密模块，里面有MD5加密解密方法
   const md5 = crypto.createHash('md5');
-  const parameter = this.ctx.request.body;
+  const parameter = this.ctx.request.body;  // 获取请求过来的参数
 
   // 校验格式
   if (!(/^[a-zA-Z0-9_]{1,16}$/.test(parameter.user_name))) {

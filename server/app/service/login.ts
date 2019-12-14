@@ -33,6 +33,7 @@ export default class Login extends Service {
       } else {
         // 生成token
         const token = this.app.jwt.sign({
+          userid: repeatedData[0].id, //需要存储的 token 数据
           username: data.user_name, //需要存储的 token 数据
         }, this.app.config.jwt.secret);
         // 返回 token 到前端
