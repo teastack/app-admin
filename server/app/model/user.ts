@@ -5,6 +5,7 @@ module.exports = app => {
       pass_word: STRING,
       stauts: STRING,
       nick_name: STRING,
+      img_url: STRING,
       mobile_phone: STRING,
       email: STRING,
       creation_time: DATE,
