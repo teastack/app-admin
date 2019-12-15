@@ -1,6 +1,11 @@
 module.exports = app => {
-    const { STRING, DATE } = app.Sequelize;
+    const { STRING, INTEGER, DATE } = app.Sequelize;
     const User = app.model.define('users', {
+      id: {
+        type: INTEGER,
+        autoIncrement: true,
+        primaryKey: true
+      },
       user_name:STRING,
       pass_word: STRING,
       stauts: STRING,
@@ -13,5 +18,12 @@ module.exports = app => {
     }, {
       timestamps: false // 禁止查询时间
     });
+
+    // 关联message_borard表
+    User.associate = function (){
+      // 与MessageBoard存在一对一关系，所以是hasOne()
+      app.model.User.hasOne(app.model.MessageBoard, {foreignKey: 'uid'});
+    }
+
     return User;
   };

@@ -9,21 +9,17 @@
     <!-- 留言内容 -->
     <div class="message-info">
       <ul>
-        <li>
+        <li v-for="(val, index) in messageList" :key="index">
           <div class="img">
-            <img src="~@/assets/images/user.png" alt="">
+            <img :src="baseURL + val.img_url" alt="">
           </div>
           <div class="info">
-            <h2>teastack</h2>
-            <p>定传值给子组件,子组件的图片url在img标签的src属性中相对路径写死的。(...
-简书社区 - 百度快照
-为您推荐：vue img动态路径vue中src目录vue中srcimg标签的src路径格式img相对地址src路径img src图片不显示img标签src绝对路径
-vue img :src拼接问题 - Demon的回答 - SegmentFault 思否
-2018年11月2日 - vue img :src拼接问题 vue.js 4.7k 次浏览 问题对人有帮助,内容完</p>
+            <h2>{{val.nick_name}}</h2>
+            <p>{{val.message_board.message}}</p>
             <div class="info-img">
-              <img src="~@/assets/images/teastack.png" alt="">
-              <img src="~@/assets/images/user.png" alt="">
+              <img :src="baseURL + val" alt="" v-for="(val, index) in val.message_board.img_url" :key="index">
             </div>
+            <p>{{val.message_board.creation_time}}</p>
           </div>
         </li>
       </ul>
@@ -34,12 +30,15 @@ vue img :src拼接问题 - Demon的回答 - SegmentFault 思否
 <script>
 
 import moveIco from '@/components/app/move-ico'
+import Api from '@/api'
 
 export default {
   name: 'app-home',
   data () {
     return {
-      ico: '#icon-icon-test1'
+      ico: '#icon-icon-test1',
+      baseURL: 'http://127.0.0.1:7001',
+      messageList: []
     }
   },
   components: {
@@ -56,6 +55,18 @@ export default {
     }
   },
   created () {
+    Api.appApi.getMssageList().then(res => {
+      if (res.code === 200) {
+        res.data.forEach(val => {
+          if (val.message_board.img_url) {
+            val.message_board.img_url = JSON.parse(val.message_board.img_url)
+          }
+        })
+        this.messageList = res.data
+      } else {
+        this.$notify({ type: 'primary', message: `${res.msg}` })
+      }
+    })
   },
   mounted () {
   }
@@ -80,6 +91,7 @@ export default {
       li {
         display: flex;
         padding-bottom: .1rem;
+        padding: 0 .1rem;
         border-bottom: 1px solid #eee;
         &:nth-last-child(1) {
           border-bottom: none;
@@ -87,7 +99,6 @@ export default {
         .img {
           width: .8rem;
           height: .8rem;
-          margin: .1rem;
           border-radius: .1rem;
           overflow: hidden;
           img {
@@ -97,10 +108,12 @@ export default {
         }
         .info {
           width: 85%;
+          padding-left: .2rem;
           h2 {
             font-weight: 600;
             line-height: .5rem;
             padding-left: .1rem;
+            padding-top: .1rem;
           }
           p {
             max-height: 3.36rem;

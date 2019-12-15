@@ -11,6 +11,7 @@ export default class User extends Service {
     const result: any = await this.ctx.model.User.findAll({
       // 属性查询字段
       attributes: ['id', 'user_name', 'nick_name', 'mobile_phone', 'email', 'creation_time', 'update_time'],
+      order: [['creation_time', 'DESC']],  // 时间倒序
       raw: true // 是否返回数组
     });
     return {

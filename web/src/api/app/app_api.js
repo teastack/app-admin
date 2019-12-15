@@ -14,6 +14,13 @@ const register = (params) => {
   })
 }
 
+// 获取留言列表
+const getMssageList = (params) => {
+  return axios.get('message_list', params).then((result) => {
+    return result.data
+  })
+}
+
 // 添加留言信息
 const addMssageInfo = (params) => {
   return axios.post('add_message', params).then((result) => {
@@ -24,5 +31,6 @@ const addMssageInfo = (params) => {
 export default {
   login,
   register,
+  getMssageList,
   addMssageInfo
 }
