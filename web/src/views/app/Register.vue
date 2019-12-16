@@ -7,7 +7,22 @@
     @click-left="$router.go(-1)"/>
 
     <!-- 注册表单 -->
+    <van-uploader
+      style="left: 50%;transform: translateX(-50%);padding: .3rem 0;"
+      v-model="fileList"
+      multiple
+      :max-count="1"
+      :before-read="beforeRead"
+    />
     <van-cell-group>
+        <van-field
+            v-model="userInfo.nick_name"
+            clearable
+            label="昵称"
+            maxlength="16"
+            placeholder="请输入昵称"
+        />
+
         <van-field
             v-model="userInfo.user_name"
             required
@@ -19,13 +34,11 @@
             @input="txtChange(userInfo.user_name, 'user_name')"
         />
 
-        <van-field
-            v-model="userInfo.nick_name"
-            clearable
-            label="昵称"
-            maxlength="16"
-            placeholder="请输入昵称"
-        />
+        <van-radio-group v-model="radio">
+          <label>性别</label>
+          <van-radio name="0" checked-color="pink" style="margin-right:.3rem">女</van-radio>
+          <van-radio name="1" checked-color="skyblue">男</van-radio>
+        </van-radio-group>
 
         <van-field
             v-model="userInfo.mobile_phone"
@@ -76,6 +89,8 @@ export default {
   name: 'app-register',
   data () {
     return {
+      fileList: [],
+      radio: '',
       userInfo: {},
       user_nameError: '',
       mobile_phoneError: '',
@@ -88,6 +103,14 @@ export default {
     }
   },
   methods: {
+    // 上传头像验证
+    beforeRead (file) {
+      if (file.type !== 'image/png' && file.type !== 'image/jpeg') {
+        this.$toast('哦豁，伦家喜欢的是png OR jpg呐！')
+        return false
+      }
+      return true
+    },
     // 用户输入验证
     txtChange (val, type) {
       switch (type) {
@@ -135,6 +158,14 @@ export default {
     },
     // 注册
     goRegister () {
+      if (!this.radio) {
+        this.$toast('哦豁，伦家想知道你是男还是女的呢')
+        return
+      }
+      this.userInfo.sex = Number(this.radio)
+      if (this.fileList.length > 0) {
+        this.userInfo.img_url = this.fileList[0].content
+      }
       const registerOk = this.registerOk()
       if (!registerOk) {
         return
@@ -190,6 +221,22 @@ export default {
 .app-register {
     /deep/ .van-nav-bar .van-icon {
         color: #323233
+    }
+    /deep/ .van-radio-group {
+      display: flex;
+      padding: 10px 16px;
+      label {
+        font-size: 100%;
+        width: 90px;
+        color: #323233;
+        &::before {
+          position: absolute;
+          left: 8px;
+          color: #ee0a24;
+          font-size: 14px;
+          content: '*';
+        }
+      }
     }
     .register {
         width: 50%;

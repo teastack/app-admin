@@ -6,9 +6,10 @@ module.exports = app => {
         autoIncrement: true,
         primaryKey: true
       },
+      sex: INTEGER,
       user_name:STRING,
       pass_word: STRING,
-      stauts: STRING,
+      stauts: INTEGER,
       nick_name: STRING,
       img_url: STRING,
       mobile_phone: STRING,

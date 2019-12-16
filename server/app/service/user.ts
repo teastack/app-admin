@@ -25,6 +25,7 @@ export default class User extends Service {
   * 注册
   */ 
  public async register() {
+  const fs = require("fs");  // 引入fs模块
   const { Op } = this.app.Sequelize;  // 导入Sequelize的mysql查询语句eg：or，and
   const crypto = require('crypto');  // 导入加密模块，里面有MD5加密解密方法
   const md5 = crypto.createHash('md5');
@@ -73,13 +74,43 @@ export default class User extends Service {
     }
   }
 
+  // 添加用户文件夹
+  const fileMkdir = `app/public/images/user/${parameter.user_name}`;
+  const path = `app/public/images/user/${parameter.user_name}/${Date.now()}.png`;
+  // 判断用户文件夹是否存在
+  const isFile = fs.existsSync(fileMkdir);
+  if (!isFile) {
+    fs.mkdirSync(fileMkdir, (err) => {
+      if(err){
+          throw err;
+      }
+    });
+  };
+  if (parameter.img_url) {
+    const base64 = parameter.img_url.replace(/^data:image\/\w+;base64,/, "");
+    const dataBuffer = Buffer.from(base64, 'base64'); //把base64码转成buffer对象
+    fs.writeFile(path, dataBuffer, function(err) {
+      if (err) {
+          throw err;
+      }
+    });
+    parameter.img_url = path.slice(3);
+  } else {
+    if (parameter.sex) {
+      parameter.img_url = '/public/images/1.png'
+    } else {
+      parameter.img_url = '/public/images/0.png'
+    }
+  }
   // 添加用户
   parameter.pass_word = md5.update(parameter.pass_word).digest('hex');  // 加密密码
   const result: any = await this.ctx.model.User.create({
     user_name: parameter.user_name,
     pass_word: parameter.pass_word,
-    nick_name: parameter.nick_name,
-    stauts: '1',
+    nick_name: parameter.nick_name ? parameter.nick_name : parameter.user_name,
+    img_url: parameter.img_url,
+    sex: parameter.sex,
+    stauts: 1,
     mobile_phone: parameter.mobile_phone
   });
   if (!result) {
