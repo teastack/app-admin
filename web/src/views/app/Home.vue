@@ -11,15 +11,15 @@
       <ul>
         <li v-for="(val, index) in messageList" :key="index">
           <div class="img">
-            <img :src="baseURL + val.img_url" alt="">
+            <img :src="baseURL + val.user.img_url" alt="">
           </div>
           <div class="info">
-            <h2>{{val.nick_name}}</h2>
-            <p>{{val.message_board.message}}</p>
+            <h2>{{val.user.nick_name}}</h2>
+            <p>{{val.message}}</p>
             <div class="info-img">
-              <img :src="baseURL + val" alt="" v-for="(val, index) in val.message_board.img_url" :key="index">
+              <img :src="baseURL + val" alt="" v-for="(val, index) in val.img_url" :key="index">
             </div>
-            <p>{{val.message_board.creation_time}}</p>
+            <p style="font-size: .16rem;">{{val.creation_time}}</p>
           </div>
         </li>
       </ul>
@@ -58,8 +58,8 @@ export default {
     Api.appApi.getMssageList().then(res => {
       if (res.code === 200) {
         res.data.forEach(val => {
-          if (val.message_board.img_url) {
-            val.message_board.img_url = JSON.parse(val.message_board.img_url)
+          if (val.img_url) {
+            val.img_url = JSON.parse(val.img_url)
           }
         })
         this.messageList = res.data
@@ -91,7 +91,7 @@ export default {
       li {
         display: flex;
         padding-bottom: .1rem;
-        padding: 0 .1rem;
+        padding: .1rem .1rem;
         border-bottom: 1px solid #eee;
         &:nth-last-child(1) {
           border-bottom: none;

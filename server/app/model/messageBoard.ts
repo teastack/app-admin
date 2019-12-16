@@ -8,10 +8,7 @@ module.exports = app => {
       },
       uid: INTEGER,
       message: STRING,
-      img_url: {
-        type: STRING,
-        allowNull: false
-      },
+      img_url: STRING,
       creation_time: DATE,
       update_time: DATE,
     }, {
@@ -19,7 +16,7 @@ module.exports = app => {
     });
 
     MessageBoard.associate = function (){
-      app.model.MessageBoard.belongsTo(app.model.User, {foreignKey: 'uid', targetKey: 'id'});
+      app.model.MessageBoard.belongsTo(app.model.User, {foreignKey: 'uid'});
   }
 
     return MessageBoard;

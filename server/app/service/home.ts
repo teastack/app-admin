@@ -7,11 +7,11 @@ export default class Home extends Service {
     */
     async messageList () {
         const { ctx } = this;
-        await this.ctx.model.User.findAll({
-            attributes: ['id', 'user_name', 'nick_name', 'img_url'],
+        await this.ctx.model.MessageBoard.findAll({
+            attributes: ['id', 'message', 'img_url', 'creation_time'],
             include: {
-              model: this.app.model.MessageBoard,
-              attributes: ['message', 'img_url', 'creation_time']
+              model: this.app.model.User,
+              attributes: ['id', 'user_name', 'nick_name', 'img_url']
             },
             raw: false
         }).then(result => {
@@ -40,13 +40,13 @@ export default class Home extends Service {
         const parameter = this.ctx.request.body;  // 获取用户请求参数
         const jwtInfo = ctx.state.user; // 从jwt验证中获取用户id
         let img_arr:any = [];
-        if (parameter.img_arr.length) {
+        if (parameter.img_arr) {
             for (const key in parameter.img_arr) {
                 if (parameter.img_arr.hasOwnProperty(key)) {
                     const base64 = parameter.img_arr[key].replace(/^data:image\/\w+;base64,/, ""); //去掉图片base64码前面部分data:image/png;base64
                     const dataBuffer = Buffer.from(base64, 'base64'); //把base64码转成buffer对象
-                    let path = `app/public/message_images/${jwtInfo.username}/${Date.now()}.png`;
-                    const fileMkdir = `app/public/message_images/${jwtInfo.username}`;
+                    let path = `app/public/images/message_images/${jwtInfo.username}/${Date.now()}.png`;
+                    const fileMkdir = `app/public/images/message_images/${jwtInfo.username}`;
                     // 判断用户文件夹是否存在
                     const isFile = fs.existsSync(fileMkdir);
                     if (isFile) {
@@ -59,12 +59,11 @@ export default class Home extends Service {
                         fs.mkdirSync(fileMkdir, (err) => {
                             if(err){
                                 throw err;
-                            }else{
-                                fs.writeFile(path, dataBuffer, function(err) {
-                                    if (err) {
-                                        throw err;
-                                    }
-                                });
+                            }
+                        });
+                        fs.writeFile(path, dataBuffer, function(err) {
+                            if (err) {
+                                throw err;
                             }
                         });
                     }
@@ -73,42 +72,32 @@ export default class Home extends Service {
                 }
             }
             img_arr = JSON.stringify(img_arr)
-            let result = await this.ctx.model.MessageBoard.create({
+            await this.ctx.model.MessageBoard.create({
                 uid: jwtInfo.userid,
                 message: parameter.message,
                 img_url: img_arr
-            });
-            if (!result) {
-                ctx.body = {
-                    code: 999,
-                    data: [],
-                    msg: '发表失败'
-                }
-            } else {
+            }).then(() => {
                 ctx.body = {
                     code: 200,
                     data: [],
                     msg: '发表成功'
                 }
-            }
+            }).catch(err => {
+                throw err
+            });
         } else {
-            let result = await this.ctx.model.MessageBoard.create({
+            await this.ctx.model.MessageBoard.create({
                 uid: jwtInfo.userid,
                 message: parameter.message
-            });
-            if (!result) {
-                ctx.body = {
-                    code: 999,
-                    data: [],
-                    msg: '发表失败'
-                }
-            } else {
+            }).then(() => {
                 ctx.body = {
                     code: 200,
                     data: [],
                     msg: '发表成功'
                 }
-            }
+            }).catch(err => {
+                throw err
+            });
         }
     }
 }

@@ -8,7 +8,7 @@
 
     <!-- 信息内容输入区 -->
     <div class="message">
-      <textarea class="textarea" autofocus="autofocus" maxlength="240" v-model="message" placeholder="君, 此刻的心情..."></textarea>
+      <textarea class="textarea" autofocus="autofocus" maxlength="240" v-model.trim ="message" placeholder="君, 此刻的心情..."></textarea>
       <p class="message-max-length">{{messageLength}} / {{messageMaxLength}}</p>
     </div>
 
@@ -30,7 +30,7 @@ export default {
   name: 'app-message',
   data () {
     return {
-      message: '君, 此刻的心情...',
+      message: '',
       messageLength: 0,
       messageMaxLength: 240,
       fileList: []
@@ -47,6 +47,10 @@ export default {
   methods: {
     // 提交发表
     submit () {
+      if (!this.message) {
+        this.$toast('君是不是还没想好啦！')
+        return
+      }
       let imgArr = []
       let messageInfo = {}
       for (const key in this.fileList) {
@@ -54,8 +58,10 @@ export default {
           imgArr.push(this.fileList[key].content)
         }
       }
+      if (imgArr.length > 0) {
+        messageInfo.img_arr = imgArr
+      }
       messageInfo.message = this.message
-      messageInfo.img_arr = imgArr
       Api.appApi.addMssageInfo(messageInfo).then(res => {
         if (res.code === 200) {
           let _this = this

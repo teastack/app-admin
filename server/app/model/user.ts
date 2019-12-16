@@ -20,9 +20,8 @@ module.exports = app => {
       timestamps: false // 禁止查询时间
     });
 
-    // 关联message_borard表
     User.associate = function (){
-      // 与MessageBoard存在一对一关系，所以是hasOne()
+      // 关联message_borard表
       app.model.User.hasOne(app.model.MessageBoard, {foreignKey: 'uid'});
     }
 
