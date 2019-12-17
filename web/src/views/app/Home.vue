@@ -11,13 +11,15 @@
       <ul>
         <li v-for="(val, index) in messageList" :key="index">
           <div class="img">
-            <img :src="baseURL + val.user.img_url" alt="">
+            <!-- <img :src="baseURL + val.user.img_url" alt=""> -->
+            <img v-lazy="baseURL + val.user.img_url" alt="">
           </div>
           <div class="info">
             <h2>{{val.user.nick_name}}</h2>
             <p>{{val.message}}</p>
             <div class="info-img">
-              <img :src="baseURL + val" alt="" v-for="(val, index) in val.img_url" :key="index">
+              <!-- <img :src="baseURL + val2" alt="" v-for="(val2, index) in val.img_url" :key="index" @click="imagePreview(val.img_url, index)"> -->
+              <img  v-lazy="baseURL + val2" alt="" v-for="(val2, index) in val.img_url" :key="index" @click="imagePreview(val.img_url, index)">
             </div>
             <p style="font-size: .16rem;">{{val.creation_time}}</p>
           </div>
@@ -31,6 +33,7 @@
 
 import moveIco from '@/components/app/move-ico'
 import Api from '@/api'
+import { ImagePreview } from 'vant'
 
 export default {
   name: 'app-home',
@@ -52,6 +55,22 @@ export default {
     // 留言编辑
     goMessage () {
       this.$router.push({name: 'app-message'})
+    },
+    // 预览图片
+    imagePreview (imgArr, index) {
+      let arr = []
+      for (const key in imgArr) {
+        if (imgArr.hasOwnProperty(key)) {
+          arr.push(this.baseURL + imgArr[key])
+        }
+      }
+      ImagePreview({
+        images: arr,
+        startPosition: index,
+        onClose () {
+          // do something
+        }
+      })
     }
   },
   created () {

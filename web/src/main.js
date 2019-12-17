@@ -7,7 +7,10 @@ import '@/assets/style/index.less'
 import '@/assets/style/iconfont/iconfont'
 
 // 导入vantUI框架组件
+// eslint-disable-next-line
 import Vant from 'vant'
+// eslint-disable-next-line
+import { Lazyload } from 'vant'  // 添加vantUI图片懒加载 v-lazy指令
 import 'vant/lib/index.css'
 // 导入view
 import ViewUI from 'view-design'
@@ -17,6 +20,7 @@ import 'view-design/dist/styles/iview.css'
 import store from '@/store'
 
 Vue.use(Vant)
+Vue.use(Lazyload)
 Vue.use(ViewUI)
 
 Vue.config.productionTip = false
