@@ -8,10 +8,11 @@ export default class Home extends Service {
     async messageList () {
         const { ctx } = this;
         await this.ctx.model.MessageBoard.findAll({
-            attributes: ['id', 'message', 'img_url', 'creation_time'],
+            attributes: ['uid', 'message', 'img_url', 'creation_time'],
+            order: [['creation_time', 'DESC']],
             include: {
               model: this.app.model.User,
-              attributes: ['id', 'user_name', 'nick_name', 'img_url']
+              attributes: ['user_name', 'nick_name', 'img_url']
             },
             raw: false
         }).then(result => {
