@@ -7,25 +7,27 @@
     </div>
 
     <!-- 留言内容 -->
-    <div class="message-info">
-      <ul>
-        <li v-for="(val, index) in messageList" :key="index">
-          <div class="img">
-            <!-- <img :src="baseURL + val.user.img_url" alt=""> -->
-            <img v-lazy="baseURL + val.user.img_url" alt="">
-          </div>
-          <div class="info">
-            <h2>{{val.user.nick_name}}</h2>
-            <p>{{val.message}}</p>
-            <div class="info-img">
-              <!-- <img :src="baseURL + val2" alt="" v-for="(val2, index) in val.img_url" :key="index" @click="imagePreview(val.img_url, index)"> -->
-              <img  v-lazy="baseURL + val2" alt="" v-for="(val2, index) in val.img_url" :key="index" @click="imagePreview(val.img_url, index)">
+    <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
+      <div class="message-info">
+        <ul>
+          <li v-for="(val, index) in messageList" :key="index">
+            <div class="img">
+              <!-- <img :src="baseURL + val.user.img_url" alt=""> -->
+              <img v-lazy="baseURL + val.user.img_url" alt="">
             </div>
-            <p style="font-size: .16rem;">{{val.creation_time}}</p>
-          </div>
-        </li>
-      </ul>
-    </div>
+            <div class="info">
+              <h2>{{val.user.nick_name}}</h2>
+              <p>{{val.message}}</p>
+              <div class="info-img">
+                <!-- <img :src="baseURL + val2" alt="" v-for="(val2, index) in val.img_url" :key="index" @click="imagePreview(val.img_url, index)"> -->
+                <img  v-lazy="baseURL + val2" alt="" v-for="(val2, index) in val.img_url" :key="index" @click="imagePreview(val.img_url, index)">
+              </div>
+              <p style="font-size: .16rem;">{{val.creation_time}}</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </van-pull-refresh>
   </div>
 </template>
 
@@ -41,13 +43,31 @@ export default {
     return {
       ico: '#icon-icon-test1',
       baseURL: 'http://127.0.0.1:7001',
-      messageList: []
+      messageList: [],
+      page: 1,
+      pageSize: 15,
+      isLoading: false // 下拉刷下
     }
   },
   components: {
     moveIco
   },
   methods: {
+    // 获取留言列表
+    getMessageList () {
+      Api.appApi.getMssageList().then(res => {
+        if (res.code === 200) {
+          res.data.forEach(val => {
+            if (val.img_url) {
+              val.img_url = JSON.parse(val.img_url)
+            }
+          })
+          this.messageList = res.data
+        } else {
+          this.$notify({ type: 'primary', message: `${res.msg}` })
+        }
+      })
+    },
     // 个人中心
     goPersonal () {
       this.$router.push({name: 'app-personal'})
@@ -71,21 +91,18 @@ export default {
           // do something
         }
       })
+    },
+    // 下拉刷新
+    onRefresh () {
+      setTimeout(() => {
+        this.getMessageList()
+        this.$toast('刷新成功')
+        this.isLoading = false
+      }, 500)
     }
   },
   created () {
-    Api.appApi.getMssageList().then(res => {
-      if (res.code === 200) {
-        res.data.forEach(val => {
-          if (val.img_url) {
-            val.img_url = JSON.parse(val.img_url)
-          }
-        })
-        this.messageList = res.data
-      } else {
-        this.$notify({ type: 'primary', message: `${res.msg}` })
-      }
-    })
+    this.getMessageList()
   },
   mounted () {
   }
