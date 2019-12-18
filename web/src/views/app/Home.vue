@@ -125,15 +125,15 @@ export default {
     },
     // 上拉加载更多
     onLoad () {
-      this.finished = false
       this.page++
-      this.getMessageList()
       setTimeout(() => {
         // 加载状态结束
         this.loading = false
         if (this.total === this.dataTotal) {
           // 数据全部加载完成,将不再触发上拉加载更多
           this.finished = true
+        } else {
+          this.getMessageList()
         }
       }, 500)
     }
