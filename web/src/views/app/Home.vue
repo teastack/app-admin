@@ -7,27 +7,38 @@
     </div>
 
     <!-- 留言内容 -->
-    <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
-      <div class="message-info">
-        <ul>
-          <li v-for="(val, index) in messageList" :key="index">
-            <div class="img">
-              <!-- <img :src="baseURL + val.user.img_url" alt=""> -->
-              <img v-lazy="baseURL + val.user.img_url" alt="">
-            </div>
-            <div class="info">
-              <h2>{{val.user.nick_name}}</h2>
-              <p>{{val.message}}</p>
-              <div class="info-img">
-                <!-- <img :src="baseURL + val2" alt="" v-for="(val2, index) in val.img_url" :key="index" @click="imagePreview(val.img_url, index)"> -->
-                <img  v-lazy="baseURL + val2" alt="" v-for="(val2, index) in val.img_url" :key="index" @click="imagePreview(val.img_url, index)">
-              </div>
-              <p style="font-size: .16rem;">{{val.creation_time}}</p>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </van-pull-refresh>
+    <div id="list-content">
+      <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
+        <van-list
+          v-model="loading"
+          :finished="finished"
+          :error.sync="error"
+          finished-text="君，阅读多了伤神哦，今天就到这吧~"
+          error-text="啊哦，页面好像跑丢了，点击呼唤Ta回来~"
+          @load="onLoad"
+        >
+          <div class="message-info">
+            <ul>
+              <li v-for="(val, index) in messageList" :key="index">
+                <div class="img">
+                  <!-- <img :src="baseURL + val.user.img_url" alt=""> -->
+                  <img v-lazy="baseURL + val.user.img_url" alt="">
+                </div>
+                <div class="info">
+                  <h2>{{val.user.nick_name}}</h2>
+                  <p>{{val.message}}</p>
+                  <div class="info-img">
+                    <!-- <img :src="baseURL + val2" alt="" v-for="(val2, index) in val.img_url" :key="index" @click="imagePreview(val.img_url, index)"> -->
+                    <img  v-lazy="baseURL + val2" alt="" v-for="(val2, index) in val.img_url" :key="index" @click="imagePreview(val.img_url, index)">
+                  </div>
+                  <p style="font-size: .16rem;">{{val.creation_time}}</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </van-list>
+      </van-pull-refresh>
+    </div>
   </div>
 </template>
 
@@ -46,7 +57,12 @@ export default {
       messageList: [],
       page: 1,
       pageSize: 15,
-      isLoading: false // 下拉刷下
+      total: 0, // 留言列表总数
+      dataTotal: 0, // 留言列表当前总数
+      isLoading: false, // 下拉刷下
+      loading: false, // 上拉加载
+      finished: false, // 上拉数据是否加载完毕 为false时，将不会再去触发load事件
+      error: true
     }
   },
   components: {
@@ -55,17 +71,21 @@ export default {
   methods: {
     // 获取留言列表
     getMessageList () {
-      Api.appApi.getMssageList().then(res => {
+      Api.appApi.getMssageList({pageSize: this.pageSize * this.page}).then(res => {
         if (res.code === 200) {
-          res.data.forEach(val => {
+          this.total = res.data.count
+          this.dataTotal = res.data.rows.length
+          res.data.rows.forEach(val => {
             if (val.img_url) {
               val.img_url = JSON.parse(val.img_url)
             }
           })
-          this.messageList = res.data
+          this.messageList = res.data.rows
         } else {
           this.$notify({ type: 'primary', message: `${res.msg}` })
         }
+      }).catch(() => {
+        this.error = true
       })
     },
     // 个人中心
@@ -94,10 +114,27 @@ export default {
     },
     // 下拉刷新
     onRefresh () {
+      // 充值数据
+      this.page = 1
+      this.pageSize = 15
       setTimeout(() => {
         this.getMessageList()
         this.$toast('刷新成功')
         this.isLoading = false
+      }, 500)
+    },
+    // 上拉加载更多
+    onLoad () {
+      this.finished = false
+      this.page++
+      this.getMessageList()
+      setTimeout(() => {
+        // 加载状态结束
+        this.loading = false
+        if (this.total === this.dataTotal) {
+          // 数据全部加载完成,将不再触发上拉加载更多
+          this.finished = true
+        }
       }, 500)
     }
   },
@@ -105,6 +142,8 @@ export default {
     this.getMessageList()
   },
   mounted () {
+    let winHeight = document.documentElement.clientHeight // 视口大小
+    document.getElementById('list-content').style.height = winHeight + 46 + 'px' // 调整上拉加载框高度
   }
 }
 </script>
@@ -115,6 +154,7 @@ export default {
   overflow: auto;
   .add-message {
     position: fixed;
+    z-index: 998;
     .add-ico {
       font-size: 2em;
       margin-left: .1rem;

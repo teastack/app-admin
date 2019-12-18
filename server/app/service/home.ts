@@ -7,9 +7,12 @@ export default class Home extends Service {
     */
     async messageList () {
         const { ctx } = this;
-        await this.ctx.model.MessageBoard.findAll({
+        const parameter = ctx.query; // 获取get请求参数
+        await this.ctx.model.MessageBoard.findAndCountAll({
             attributes: ['uid', 'message', 'img_url', 'creation_time'],
             order: [['creation_time', 'DESC']],
+            limit: Number(parameter.pageSize),
+            distinct: true, // 统计总数是不计算关联表
             include: {
               model: this.app.model.User,
               attributes: ['user_name', 'nick_name', 'img_url']

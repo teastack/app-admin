@@ -1,5 +1,10 @@
 export default [
   {
+    path: 'test',
+    name: 'app-test',
+    component: resolve => require(['@/views/app/Test'], resolve)
+  },
+  {
     path: 'login',
     name: 'app-login',
     component: resolve => require(['@/views/app/Login'], resolve)

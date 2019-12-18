@@ -15,8 +15,8 @@ const register = (params) => {
 }
 
 // 获取留言列表
-const getMssageList = (params) => {
-  return axios.get('message_list', params).then((result) => {
+const getMssageList = (pa) => {
+  return axios.get('message_list', {params: pa}).then((result) => {
     return result.data
   })
 }
