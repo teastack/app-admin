@@ -62,7 +62,7 @@ export default {
       isLoading: false, // 下拉刷下
       loading: false, // 上拉加载
       finished: false, // 上拉数据是否加载完毕 为false时，将不会再去触发load事件
-      error: true
+      error: false
     }
   },
   components: {
