@@ -5,4 +5,9 @@ export default class AppUserController extends Controller {
     let data = await this.ctx.service.user.register()
     this.ctx.body = data
   }
+
+  public async userInfo() {
+    await this.ctx.service.user.getUserInfo()
+  }
+
 }

@@ -22,6 +22,19 @@ export default class User extends Service {
   }
 
   /*
+  * 用户信息
+  */
+ public async getUserInfo () {
+   const {ctx} = this;
+   await this.ctx.model.User.findAll({
+     where: {
+      
+     }
+   });
+   ctx.body = '用户信息';
+ }
+
+  /*
   * 注册
   */ 
  public async register() {

@@ -14,6 +14,12 @@ const register = (params) => {
   })
 }
 
+const getUserInfo = (pa) => {
+  return axios.get('user_info', {params: pa}).then((result) => {
+    return result.data
+  })
+}
+
 // 获取留言列表
 const getMssageList = (pa) => {
   return axios.get('message_list', {params: pa}).then((result) => {
@@ -32,5 +38,6 @@ export default {
   login,
   register,
   getMssageList,
-  addMssageInfo
+  addMssageInfo,
+  getUserInfo
 }
