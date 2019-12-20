@@ -1,4 +1,4 @@
 'use strict'
 module.exports = {
-  baseURL: 'http://127.0.0.1:7001'
+  baseURL: 'http://106.13.161.203:7001'
 }
