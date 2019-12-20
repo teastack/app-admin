@@ -10,7 +10,7 @@ export default class User extends Service {
     // 获取jwt信息 { username: 'jack14', iat: 1576138427, exp: 1576224827 }
     const result: any = await this.ctx.model.User.findAll({
       // 属性查询字段
-      attributes: ['id', 'user_name', 'nick_name', 'mobile_phone', 'email', 'creation_time', 'update_time'],
+      attributes: ['id', 'user_name', 'nick_name', 'sex', 'img_url', 'mobile_phone', 'email', 'creation_time', 'update_time'],
       order: [['creation_time', 'DESC']],  // 时间倒序
       raw: true // 是否返回数组
     });
@@ -28,10 +28,17 @@ export default class User extends Service {
    const {ctx} = this;
    await this.ctx.model.User.findAll({
      where: {
-      
+      id: this.ctx.state.user.userid
+     },
+     attributes: ['id', 'user_name', 'nick_name', 'sex', 'img_url', 'mobile_phone', 'email', 'creation_time', 'update_time'],
+     raw: true // 是否返回数组
+   }).then(res => {
+     ctx.body = {
+       code: 200,
+       data: res,
+       msg: '获取用户个人信息成功'
      }
    });
-   ctx.body = '用户信息';
  }
 
   /*

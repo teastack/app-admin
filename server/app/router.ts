@@ -8,7 +8,7 @@ export default (app: Application) => {
   router.post('/login', controller.login.index);
   router.post('/register', controller.app.user.register);
   router.get('/message_list', controller.app.home.messageList);
-  router.get('/user_info', controller.app.user.userInfo);
+  router.get('/user_info', jwt, controller.app.user.userInfo);
   router.post('/add_message', jwt, controller.app.home.addMessage);
 
   // admin
