@@ -10,6 +10,6 @@ export default class Test extends Service {
    * @param name - your name
    */
   public async sayHi(name: string) {
-    return `${name},链接测试`;
+    return `hi, ${name}`;
   }
 }
