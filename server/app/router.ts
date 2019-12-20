@@ -2,7 +2,7 @@ import { Application } from 'egg';
 
 export default (app: Application) => {
   const { controller, router, jwt } = app;
-  
+
   // app
   router.get('/', controller.home.index);
   router.post('/login', controller.login.index);

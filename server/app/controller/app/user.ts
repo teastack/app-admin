@@ -2,12 +2,12 @@ import { Controller } from 'egg';
 
 export default class AppUserController extends Controller {
   public async register() {
-    let data = await this.ctx.service.user.register()
-    this.ctx.body = data
+    const data = await this.ctx.service.user.register();
+    this.ctx.body = data;
   }
 
   public async userInfo() {
-    await this.ctx.service.user.getUserInfo()
+    await this.ctx.service.user.getUserInfo();
   }
 
 }
