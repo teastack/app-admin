@@ -7,6 +7,7 @@
 <script>
 
 import moveIco from '@/components/app/move-ico'
+import Api from '@/api'
 
 export default {
   name: 'app-personal',
@@ -24,7 +25,9 @@ export default {
     }
   },
   created () {
-
+    Api.appApi.getUserInfo().then(res => {
+      console.log(res)
+    })
   },
   mounted () {
   }

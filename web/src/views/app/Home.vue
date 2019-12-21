@@ -47,13 +47,14 @@
 import moveIco from '@/components/app/move-ico'
 import Api from '@/api'
 import { ImagePreview } from 'vant'
+import Config from '@/Config'
 
 export default {
   name: 'app-home',
   data () {
     return {
       ico: '#icon-icon-test1',
-      baseURL: 'http://127.0.0.1:7001',
+      baseURL: Config.baseURL,
       messageList: [],
       page: 1,
       pageSize: 15,

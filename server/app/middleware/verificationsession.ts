@@ -1,6 +1,6 @@
 module.exports = () => {
     return async function verificationSession(ctx, next) {
-        ctx.session
+        console.log(ctx);
         await next();
-    }
+    };
 };

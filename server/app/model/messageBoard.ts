@@ -4,7 +4,7 @@ module.exports = app => {
       id: {
         type: INTEGER,
         autoIncrement: true,
-        primaryKey: true // uid为主键
+        primaryKey: true, // uid为主键
       },
       uid: INTEGER,
       message: STRING,
@@ -12,12 +12,12 @@ module.exports = app => {
       creation_time: DATE,
       update_time: DATE,
     }, {
-      timestamps: false // 禁止查询时间
+      timestamps: false, // 禁止查询时间
     });
 
-    MessageBoard.associate = function (){
-      app.model.MessageBoard.belongsTo(app.model.User, {foreignKey: 'uid'});
-  }
+    MessageBoard.associate = () => {
+      app.model.MessageBoard.belongsTo(app.model.User, { foreignKey: 'uid' });
+  };
 
     return MessageBoard;
   };

@@ -4,7 +4,7 @@ import { Service } from 'egg';
  * Test Service
  */
 export default class Login extends Service {
-    /**
+  /**
    * 用户登录
    */
   async login(data) {
@@ -12,9 +12,9 @@ export default class Login extends Service {
 
     const repeatedData = await this.ctx.model.User.findAll({
       where: {
-        user_name: data.user_name
+        user_name: data.user_name,
       },
-      raw: true
+      raw: true,
     });
     if (repeatedData && repeatedData.length > 0) {
       const pass_word = md5.update(data.pass_word).digest('hex');
@@ -22,19 +22,19 @@ export default class Login extends Service {
         return {
           code: 999,
           data: [],
-          msg: '用户已注销'
-         }
+          msg: '用户已注销',
+         };
       } else if (pass_word !== repeatedData[0].pass_word) {
         return {
           code: 999,
           data: [],
-          msg: '密码不正确'
-        }
+          msg: '密码不正确',
+        };
       } else {
         // 生成token
         const token = this.app.jwt.sign({
-          userid: repeatedData[0].id, //需要存储的 token 数据
-          username: data.user_name, //需要存储的 token 数据
+          userid: repeatedData[0].id, // 需要存储的 token 数据
+          username: data.user_name, // 需要存储的 token 数据
         }, this.app.config.jwt.secret);
         // 返回 token 到前端
         // 去除密码返回信息前端
@@ -44,19 +44,18 @@ export default class Login extends Service {
             code: 200,
             data: [{
               user_info: result,
-              token
+              token,
             }],
-            msg: '登录成功'
-        }
+            msg: '登录成功',
+        };
       }
     } else {
       return {
           code: 999,
           data: [],
-          msg: '用户不存在'
-      }
+          msg: '用户不存在',
+      };
     }
   }
 
 }
-

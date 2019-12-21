@@ -3,20 +3,20 @@ import { EggPlugin } from 'egg';
 const plugin: EggPlugin = {
   mysql: {
     enable: true,
-    package: 'egg-mysql'
+    package: 'egg-mysql',
   },
   jwt: {
     enable: true,
-    package: "egg-jwt"
+    package: 'egg-jwt',
   },
   cors: {
     enable: true,
-    package: 'egg-cors'
+    package: 'egg-cors',
   },
   sequelize: {
     enable: true,
     package: 'egg-sequelize',
-  }
+  },
 
 };
 

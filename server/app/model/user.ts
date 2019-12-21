@@ -4,10 +4,10 @@ module.exports = app => {
       id: {
         type: INTEGER,
         autoIncrement: true,
-        primaryKey: true
+        primaryKey: true,
       },
       sex: INTEGER,
-      user_name:STRING,
+      user_name: STRING,
       pass_word: STRING,
       stauts: INTEGER,
       nick_name: STRING,
@@ -17,13 +17,12 @@ module.exports = app => {
       creation_time: DATE,
       update_time: DATE,
     }, {
-      timestamps: false // 禁止查询时间
+      timestamps: false, // 禁止查询时间
     });
 
-    User.associate = function (){
+    User.associate = () => {
       // 关联message_borard表
-      app.model.User.hasOne(app.model.MessageBoard, {foreignKey: 'uid'});
-    }
-
+      app.model.User.hasOne(app.model.MessageBoard, { foreignKey: 'uid' });
+    };
     return User;
   };
