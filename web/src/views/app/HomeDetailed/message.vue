@@ -33,7 +33,8 @@ export default {
       message: '',
       messageLength: 0,
       messageMaxLength: 240,
-      fileList: []
+      fileList: [],
+      upload: true
     }
   },
   watch: {
@@ -48,9 +49,13 @@ export default {
     // 提交发表
     submit () {
       if (!this.message) {
-        this.$toast('君是不是还没想好啦！')
+        this.$toast('君,是不是还没想好啦！')
+        return
+      } else if (!this.upload) {
+        this.$toast('君,操作太频繁啦！')
         return
       }
+      this.upload = false // 防止用户连续点击
       let imgArr = []
       let messageInfo = {}
       for (const key in this.fileList) {
