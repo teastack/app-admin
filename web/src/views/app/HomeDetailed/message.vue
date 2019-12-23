@@ -71,8 +71,8 @@ export default {
         if (res.code === 200) {
           let _this = this
           setTimeout(() => {
-            _this.$router.push({name: 'app-home'})
             _this.$notify({ type: 'success', message: `${res.msg}` })
+            _this.$router.push({name: 'app-home'})
           }, 1500)
         } else {
           this.$notify({ type: 'primary', message: `${res.msg}` })
