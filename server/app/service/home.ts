@@ -3,12 +3,15 @@ import { Service } from 'egg';
 export default class Home extends Service {
 
     /*
-    * 留言列表
+    * 全部留言列表
     */
     async messageList () {
         const { ctx } = this;
         const parameter = ctx.query; // 获取get请求参数
         await this.ctx.model.MessageBoard.findAndCountAll({
+            where: {
+                del: 1,
+            },
             attributes: [ 'uid', 'message', 'img_url', 'creation_time' ],
             order: [[ 'creation_time', 'DESC' ]],
             limit: Number(parameter.pageSize),
@@ -17,6 +20,36 @@ export default class Home extends Service {
               model: this.app.model.User,
               attributes: [ 'user_name', 'nick_name', 'img_url' ],
             },
+            raw: false,
+        }).then(result => {
+            ctx.body = {
+                code: 200,
+                data: result,
+                msg: '留言列表获取成功',
+            };
+        }).catch(err => {
+            ctx.body = {
+                code: 999,
+                data: err,
+                msg: '留言列表获取失败',
+            };
+        });
+    }
+
+    /*
+    * 用户个人留言列表
+    */
+    async messageOwn () {
+        const { ctx } = this;
+        const parameter = ctx.query; // 获取get请求参数
+        await this.ctx.model.MessageBoard.findAndCountAll({
+            where: {
+                del: 1,
+                uid: ctx.state.user.userid,
+            },
+            attributes: [ 'id', 'message', 'img_url', 'creation_time' ],
+            order: [[ 'creation_time', 'DESC' ]],
+            limit: Number(parameter.pageSize),
             raw: false,
         }).then(result => {
             ctx.body = {
@@ -79,6 +112,7 @@ export default class Home extends Service {
                 uid: jwtInfo.userid,
                 message: parameter.message,
                 img_url: img_arr,
+                del: 1,
             }).then(() => {
                 ctx.body = {
                     code: 200,
@@ -102,5 +136,12 @@ export default class Home extends Service {
                 throw err;
             });
         }
+    }
+
+    /*
+    *   用户删除留言
+    */
+    async delMessage () {
+      console.log('删除');
     }
 }
