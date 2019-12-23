@@ -40,12 +40,14 @@ router.beforeEach((to, from, next) => {
   const isAdmin = to.path.indexOf('admin') > -1 ? 1 : 0
   // 1.获取令牌：token
   const token = localStorage.getItem('token')
+  const clientWidth = document.body.clientWidth
+  console.log(clientWidth)
   // 如果token有值，说明曾经登陆地 ，说明拥有合法访问的令牌
   if (token) {
     next()
   } else {
     // 如果是访问默认可以访问的页，如登陆，那么也不需要有令牌
-    if (to.path === '/login' || to.path === '/home' || to.path === '/admin/login' || to.path === '/register' || to.path === '/test') { // 判断是不是访问登陆页面
+    if (to.path === '/login' || to.path === '/home' || to.path === '/admin/login' || to.path === '/register' || to.path === '/test' || to.path === '/pc/home') { // 判断是不是访问登陆页面
       next()
     } else {
       if (isAdmin) {
