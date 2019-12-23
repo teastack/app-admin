@@ -6,6 +6,8 @@ import router from './router'
 import '@/assets/style/index.less'
 import '@/assets/style/iconfont/iconfont'
 
+import config from './Config' // 导入前局config
+
 // 导入vantUI框架组件
 // eslint-disable-next-line
 import Vant from 'vant'
@@ -58,6 +60,9 @@ router.beforeEach((to, from, next) => {
     }
   }
 })
+
+// Vue.prototype挂在至vue实例上
+Vue.prototype.Config = config
 
 /* eslint-disable no-new */
 new Vue({
