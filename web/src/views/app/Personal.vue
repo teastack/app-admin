@@ -16,7 +16,7 @@
           v-model="loading"
           :finished="finished"
           :error.sync="error"
-          finished-text="君，阅读多了伤神哦，今天就到这吧~"
+          finished-text="君，回忆多了伤神哦，今天就到这吧~"
           error-text="啊哦，页面好像跑丢了，点击呼唤Ta回来~"
           @load="onLoad"
         >
