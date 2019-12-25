@@ -25,7 +25,7 @@ export default (appInfo: EggAppInfo) => {
   // 数据库配置
   config.sequelize = {
     dialect: 'mysql',
-    host: '127.0.0.1',
+    host: '106.13.161.203',
     port: 3306,
     database: 'app_admin',         // 数据库名
     username: 'root',             // 数据库的用户名
