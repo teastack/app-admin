@@ -7,6 +7,7 @@ import '@/assets/style/index.less'
 import '@/assets/style/iconfont/iconfont'
 
 import config from './Config' // 导入前局config
+import * as filters from './util/filters' // 添加全局过滤器
 
 // 导入vantUI框架组件
 // eslint-disable-next-line
@@ -26,6 +27,11 @@ Vue.use(Lazyload)
 Vue.use(ViewUI)
 
 Vue.config.productionTip = false
+
+// register global utility filters.
+Object.keys(filters).forEach(key => {
+  Vue.filter(key, filters[key])
+})
 
 // 在页面加载时读取localStorage里的状态信息
 if (localStorage.getItem('data')) {
