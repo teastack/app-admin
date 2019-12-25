@@ -68,6 +68,7 @@ export default {
       }
       messageInfo.message = this.message
       Api.appApi.addMssageInfo(messageInfo).then(res => {
+        this.upload = true
         if (res.code === 200) {
           let _this = this
           setTimeout(() => {
@@ -77,6 +78,8 @@ export default {
         } else {
           this.$notify({ type: 'primary', message: `${res.msg}` })
         }
+      }).catch(() => {
+        this.upload = true
       })
     },
     // 图片校验

@@ -6,6 +6,9 @@ import router from './router'
 import '@/assets/style/index.less'
 import '@/assets/style/iconfont/iconfont'
 
+import config from './Config' // 导入前局config
+import * as filters from './util/filters' // 添加全局过滤器
+
 // 导入vantUI框架组件
 // eslint-disable-next-line
 import Vant from 'vant'
@@ -24,6 +27,11 @@ Vue.use(Lazyload)
 Vue.use(ViewUI)
 
 Vue.config.productionTip = false
+
+// register global utility filters.
+Object.keys(filters).forEach(key => {
+  Vue.filter(key, filters[key])
+})
 
 // 在页面加载时读取localStorage里的状态信息
 if (localStorage.getItem('data')) {
@@ -58,6 +66,9 @@ router.beforeEach((to, from, next) => {
     }
   }
 })
+
+// Vue.prototype挂在至vue实例上
+Vue.prototype.Config = config
 
 /* eslint-disable no-new */
 new Vue({

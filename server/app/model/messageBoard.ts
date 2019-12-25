@@ -9,6 +9,7 @@ module.exports = app => {
       uid: INTEGER,
       message: STRING,
       img_url: STRING,
+      del: INTEGER,
       creation_time: DATE,
       update_time: DATE,
     }, {

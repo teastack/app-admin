@@ -30,8 +30,8 @@ export default class User extends Service {
      where: {
       id: this.ctx.state.user.userid,
      },
-     attributes: [ 'id', 'user_name', 'nick_name', 'sex', 'img_url', 'mobile_phone', 'email', 'creation_time', 'update_time' ],
-     raw: true, // 是否返回数组
+     attributes: [ 'id', 'user_name', 'nick_name', 'sex', 'img_url', 'bg_img_url', 'autograph', 'mobile_phone', 'email', 'creation_time', 'update_time' ],
+    //  raw: true, // 是否返回数组
    }).then(res => {
      ctx.body = {
        code: 200,

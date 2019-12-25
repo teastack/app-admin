@@ -17,25 +17,7 @@
           error-text="啊哦，页面好像跑丢了，点击呼唤Ta回来~"
           @load="onLoad"
         >
-          <div class="message-info">
-            <ul>
-              <li v-for="(val, index) in messageList" :key="index">
-                <div class="img">
-                  <!-- <img :src="baseURL + val.user.img_url" alt=""> -->
-                  <img v-lazy="baseURL + val.user.img_url" alt="">
-                </div>
-                <div class="info">
-                  <h2>{{val.user.nick_name}}</h2>
-                  <p>{{val.message}}</p>
-                  <div class="info-img">
-                    <!-- <img :src="baseURL + val2" alt="" v-for="(val2, index) in val.img_url" :key="index" @click="imagePreview(val.img_url, index)"> -->
-                    <img  v-lazy="baseURL + val2" alt="" v-for="(val2, index) in val.img_url" :key="index" @click="imagePreview(val.img_url, index)">
-                  </div>
-                  <p style="font-size: .16rem;">{{val.creation_time}}</p>
-                </div>
-              </li>
-            </ul>
-          </div>
+          <message-info :messageList="messageList"></message-info>
         </van-list>
       </van-pull-refresh>
     </div>
@@ -45,16 +27,15 @@
 <script>
 
 import moveIco from '@/components/app/move-ico'
+import messageInfo from '@/components/app/message-info'
 import Api from '@/api'
-import { ImagePreview } from 'vant'
-import Config from '@/Config'
 
 export default {
   name: 'app-home',
   data () {
     return {
       ico: '#icon-icon-test1',
-      baseURL: Config.baseURL,
+      baseURL: this.Config.baseURL,
       messageList: [],
       page: 1,
       pageSize: 15,
@@ -67,7 +48,8 @@ export default {
     }
   },
   components: {
-    moveIco
+    moveIco,
+    messageInfo
   },
   methods: {
     // 获取留言列表
@@ -96,22 +78,6 @@ export default {
     // 留言编辑
     goMessage () {
       this.$router.push({name: 'app-message'})
-    },
-    // 预览图片
-    imagePreview (imgArr, index) {
-      let arr = []
-      for (const key in imgArr) {
-        if (imgArr.hasOwnProperty(key)) {
-          arr.push(this.baseURL + imgArr[key])
-        }
-      }
-      ImagePreview({
-        images: arr,
-        startPosition: index,
-        onClose () {
-          // do something
-        }
-      })
     },
     // 下拉刷新
     onRefresh () {
