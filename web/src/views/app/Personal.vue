@@ -1,7 +1,7 @@
 <template>
   <div class="app-personal">
     <move-ico :ico="ico" @click.native="goHome"></move-ico>
-    <div class="personal-top" :style="{background: 'url(' + (userInfo.bg_img_url ? Config.baseURL + userInfo.bg_img_url : '@/assets/images/bg_moren.jpg') + ') no-repeat center center', 'background-size': '100%'}">
+    <div class="personal-top" :style="{background: 'url(' + (userInfo.bg_img_url ? Config.baseURL + userInfo.bg_img_url : '~@/assets/images/bg_moren.jpg') + ') no-repeat center center', 'background-size': '100% 100%'}">
       <div class="user">
         <img :src="Config.baseURL + userInfo.img_url" alt="">
         <div class="right">
@@ -145,9 +145,9 @@ export default {
             this.init()
             this.$toast(res.msg)
           }
+        }).catch(() => {
+          this.$toast('删除失败')
         })
-      }).catch(() => {
-        this.$toast('删除失败')
       })
     }
   },
