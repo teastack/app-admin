@@ -1,7 +1,7 @@
 <template>
   <div class="app-personal">
     <move-ico :ico="ico" @click.native="goHome"></move-ico>
-    <div class="personal-top" :style="{background: 'url(' + (userInfo.bg_img_url ? Config.baseURL + userInfo.bg_img_url : '~@/assets/images/bg_moren.jpg') + ') no-repeat center center', 'background-size': '100% 100%'}">
+    <div class="personal-top" :style="{background: 'url(' + (userInfo.bg_img_url ? Config.baseURL + userInfo.bg_img_url : moren_img) + ') no-repeat center center', 'background-size': '100% 100%'}">
       <div class="user">
         <img :src="Config.baseURL + userInfo.img_url" alt="">
         <div class="right">
@@ -47,12 +47,14 @@
 import moveIco from '@/components/app/move-ico'
 import { ImagePreview } from 'vant'
 import Api from '@/api'
+import morenImg from '@/assets/images/timg.jpg'
 
 export default {
   name: 'app-personal',
   data () {
     return {
       ico: '#icon-icon-test',
+      moren_img: morenImg,
       userInfo: {},
       page: 1,
       pageSize: 15,
