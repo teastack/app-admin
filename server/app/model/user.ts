@@ -12,6 +12,8 @@ module.exports = app => {
       stauts: INTEGER,
       nick_name: STRING,
       img_url: STRING,
+      bg_img_url: STRING,
+      autograph: STRING,
       mobile_phone: STRING,
       email: STRING,
       creation_time: DATE,

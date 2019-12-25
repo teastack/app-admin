@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import app from './app/app_router' // app的路由模块
 import admin from './admin/admin_router' // 管理后台的路由模块
+import pc from './pc/pc_router' // pc端的路由模块
 
 // console.log(admin)
 Vue.use(Router)
@@ -24,6 +25,15 @@ export default new Router({
       redirect: {'name': 'admin-home'},
       children: [
         ...admin
+      ]
+    },
+    {
+      path: '/pc',
+      name: 'pc-layout',
+      component: resolve => require(['@/views/pc/Layout'], resolve),
+      redirect: {'name': 'pc-home'},
+      children: [
+        ...pc
       ]
     }
   ]
