@@ -77,11 +77,13 @@ export default class Home extends Service {
         const jwtInfo = ctx.state.user; // 从jwt验证中获取用户id
         let img_arr: any = [];
         if (parameter.img_arr) {
+            let num: number = 0;
             for (const key in parameter.img_arr) {
                 if (parameter.img_arr.hasOwnProperty(key)) {
+                    num++;
                     const base64 = parameter.img_arr[key].replace(/^data:image\/\w+;base64,/, ''); // 去掉图片base64码前面部分data:image/png;base64
                     const dataBuffer = Buffer.from(base64, 'base64'); // 把base64码转成buffer对象
-                    let path = `app/public/images/message_images/${jwtInfo.username}/${Date.now()}.png`;
+                    let path = `app/public/images/message_images/${jwtInfo.username}/tea_stack${Date.now() + num}.png`;
                     const fileMkdir = `app/public/images/message_images/${jwtInfo.username}`;
                     // 判断用户文件夹是否存在
                     const isFile = fs.existsSync(fileMkdir);
@@ -126,6 +128,7 @@ export default class Home extends Service {
             await this.ctx.model.MessageBoard.create({
                 uid: jwtInfo.userid,
                 message: parameter.message,
+                del: 1,
             }).then(() => {
                 ctx.body = {
                     code: 200,
@@ -142,6 +145,28 @@ export default class Home extends Service {
     *   用户删除留言
     */
     async delMessage () {
+      const { ctx } = this;
+      const parameter = ctx.request.body;
       console.log('删除');
+      console.log(parameter);
+      await this.ctx.model.MessageBoard.update(
+        {
+          del: 0,
+        }, {
+        where: { id: parameter.id },
+        },
+      ).then(() => {
+        ctx.body = {
+            code: 200,
+            data: [],
+            msg: '删除成功',
+        };
+      }).catch(() => {
+        ctx.body = {
+            code: 999,
+            data: [],
+            msg: '删除失败',
+        };
+      });
     }
 }
