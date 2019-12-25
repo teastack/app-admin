@@ -14,13 +14,21 @@ const register = (params) => {
   })
 }
 
+// 获取用户个人信息
 const getUserInfo = (pa) => {
   return axios.get('user_info', {params: pa}).then((result) => {
     return result.data
   })
 }
 
-// 获取留言列表
+// 获取用户个人留言列表
+const getMssageOwn = (pa) => {
+  return axios.get('message_own', {params: pa}).then((result) => {
+    return result.data
+  })
+}
+
+// 获取全部留言列表
 const getMssageList = (pa) => {
   return axios.get('message_list', {params: pa}).then((result) => {
     return result.data
@@ -34,10 +42,19 @@ const addMssageInfo = (params) => {
   })
 }
 
+// 删除留言信息
+const delMssageInfo = (params) => {
+  return axios.post('del_message', params).then((result) => {
+    return result.data
+  })
+}
+
 export default {
   login,
   register,
   getMssageList,
   addMssageInfo,
-  getUserInfo
+  getUserInfo,
+  getMssageOwn,
+  delMssageInfo
 }
