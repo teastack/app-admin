@@ -147,8 +147,6 @@ export default class Home extends Service {
     async delMessage () {
       const { ctx } = this;
       const parameter = ctx.request.body;
-      console.log('删除');
-      console.log(parameter);
       await this.ctx.model.MessageBoard.update(
         {
           del: 0,

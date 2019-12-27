@@ -12,7 +12,7 @@
             <div class="info-img">
               <img  v-lazy="Config.baseURL + val2" alt="" v-for="(val2, index) in val.img_url" :key="index" @click="imagePreview(val.img_url, index)">
             </div>
-            <p style="font-size: .16rem;">{{val.creation_time}}</p>
+            <p style="font-size: .16rem;">{{val.creation_time | timeago}}</p>
           </div>
         </li>
       </ul>
