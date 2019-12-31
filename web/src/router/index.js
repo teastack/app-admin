@@ -20,9 +20,9 @@ export default new Router({
     },
     {
       path: '/admin',
-      name: 'admin-layout',
-      component: resolve => require(['@/views/admin/Layout'], resolve),
-      redirect: {'name': 'admin-home'},
+      name: 'admin-index',
+      component: resolve => require(['@/views/admin/Index'], resolve),
+      redirect: {'name': 'admin-layout'},
       children: [
         ...admin
       ]

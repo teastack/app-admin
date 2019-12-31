@@ -14,5 +14,6 @@ export default (app: Application) => {
   router.post('/del_message', jwt, controller.app.home.delMessage);
 
   // admin
+  router.get('/user', controller.admin.user.index);
   router.get('/user_list', jwt, controller.admin.user.userList);
 };
