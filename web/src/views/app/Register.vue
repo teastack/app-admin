@@ -83,7 +83,9 @@
 </template>
 
 <script>
-import Api from '@/api'
+
+// import Api from '@/api'
+import Api from '@/api/app/app_api'
 
 export default {
   name: 'app-register',
@@ -172,10 +174,10 @@ export default {
       }
       let Obj = Object.assign({}, this.userInfo)
       delete Obj.pass_word2
-      Api.appApi.register(Obj).then(res => {
+      Api.register(Obj).then(res => {
         if (res.code === 200) {
           this.$notify({ type: 'success', message: `${res.msg}` })
-          Api.appApi.login({
+          Api.login({
             user_name: this.userInfo.user_name,
             pass_word: this.userInfo.pass_word
           }).then(res => {

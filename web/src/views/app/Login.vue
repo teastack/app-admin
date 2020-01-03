@@ -31,7 +31,8 @@
 </template>
 
 <script>
-import Api from '@/api'
+
+import Api from '@/api/app/app_api'
 
 export default {
   name: 'app-login',
@@ -55,7 +56,7 @@ export default {
       } else {
         this.user_nameErr = ''
         this.pass_wordErr = ''
-        Api.appApi.login(this.userInfo).then(res => {
+        Api.login(this.userInfo).then(res => {
           if (res.code === 200) {
             this.$notify({ type: 'success', message: `${res.msg}` })
             // 储存token

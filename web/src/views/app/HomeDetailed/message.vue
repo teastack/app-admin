@@ -25,7 +25,9 @@
 
 <script>
 
-import Api from '@/api'
+// import Api from '@/api'
+import Api from '@/api/app/app_api'
+
 export default {
   name: 'app-message',
   data () {
@@ -67,7 +69,7 @@ export default {
         messageInfo.img_arr = imgArr
       }
       messageInfo.message = this.message
-      Api.appApi.addMssageInfo(messageInfo).then(res => {
+      Api.addMssageInfo(messageInfo).then(res => {
         this.upload = true
         if (res.code === 200) {
           let _this = this

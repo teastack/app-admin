@@ -3,6 +3,7 @@ export default [
     path: 'layout',
     name: 'admin-layout',
     component: resolve => require(['@/views/admin/Layout'], resolve),
+    redirect: {'name': 'admin-home'},
     children: [
       {
         path: 'home',

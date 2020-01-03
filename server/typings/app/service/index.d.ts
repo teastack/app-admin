@@ -6,6 +6,8 @@ import ExportHome from '../../../app/service/home';
 import ExportLogin from '../../../app/service/login';
 import ExportTest from '../../../app/service/Test';
 import ExportUser from '../../../app/service/user';
+import ExportAdminHome from '../../../app/service/admin/home';
+import ExportAdminUser from '../../../app/service/admin/user';
 
 declare module 'egg' {
   interface IService {
@@ -13,5 +15,9 @@ declare module 'egg' {
     login: ExportLogin;
     test: ExportTest;
     user: ExportUser;
+    admin: {
+      home: ExportAdminHome;
+      user: ExportAdminUser;
+    }
   }
 }

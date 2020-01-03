@@ -8,7 +8,7 @@ export default (appInfo: EggAppInfo) => {
   config.keys = appInfo.name + '_1575438017297_595';
 
   // add your egg config in here
-  config.middleware = [ 'verificationsession' ];
+  // config.middleware = [ 'verificationsession' ];
 
   config.jwt = {
     secret: 'jamin', // 自定义 token 的加密条件字符串

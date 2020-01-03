@@ -1,13 +1,10 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
-    <Button type="primary">Primary</Button>
   </div>
 </template>
 
 <script>
-// 引入 api接口
-import Api from '@/api'
+
 export default {
   name: 'admin-home',
   data () {
@@ -16,10 +13,6 @@ export default {
     }
   },
   mounted () {
-    console.log(Api)
-    Api.adminApi.getUserList().then(res => {
-      console.log(res)
-    })
   }
 }
 </script>

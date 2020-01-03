@@ -18,7 +18,7 @@ module.exports = app => {
       freezeTableName: true,
     });
     Role.associate = () => {
-      app.model.Role.hasMany(app.model.User, { as: 'admin_user' });
+      app.model.Role.hasMany(app.model.AdminUser, { as: 'admin_user' });
     };
     return Role;
   };

@@ -14,6 +14,7 @@ export default (app: Application) => {
   router.post('/del_message', jwt, controller.app.home.delMessage);
 
   // admin
-  router.get('/user', controller.admin.user.index);
+  router.post('/admin/login', controller.admin.user.userLogin); // 登录
+  router.get('/admin/home', jwt, controller.admin.home.index); // 获取管理系统操作菜单
   router.get('/user_list', jwt, controller.admin.user.userList);
 };

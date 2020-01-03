@@ -5,24 +5,33 @@
                 <Menu active-name="1-2" theme="dark" width="auto" :class="menuitemClasses" :accordion="accordion">
                     <Submenu name="1">
                         <template slot="title">
-                            <Icon type="ios-paper" />
-                            订单管理
+                            <Icon type="ios-navigate" />
+                            <span>订单管理</span>
                         </template>
-                        <MenuItem name="1-1">订单管理</MenuItem>
+                        <MenuItem name="1-1">
+                            <Icon type="ios-paper"></Icon>
+                            <span>订单列表</span>
+                        </MenuItem>
                     </Submenu>
                     <Submenu name="2">
                         <template slot="title">
-                            <Icon type="ios-paper" />
-                            商品管理
+                            <Icon type="ios-search" />
+                            <span>商品管理</span>
                         </template>
-                        <MenuItem name="2-1">商品管理</MenuItem>
+                        <MenuItem name="2-1">
+                            <Icon type="ios-paper"></Icon>
+                            <span>商品列表</span>
+                        </MenuItem>
                     </Submenu>
                     <Submenu name="3">
                         <template slot="title">
-                            <Icon type="ios-paper" />
-                            角色管理
+                            <Icon type="ios-settings" />
+                            <span>角色管理</span>
                         </template>
-                        <MenuItem name="3-1">角色管理</MenuItem>
+                        <MenuItem name="3-1">
+                            <Icon type="ios-paper"></Icon>
+                            <span>角色列表</span>
+                        </MenuItem>
                     </Submenu>
                 </Menu>
             </Sider>
@@ -42,6 +51,9 @@
 </template>
 
 <script>
+
+import Api from '@/api/admin/admin_api'
+
 export default {
   name: 'admin-layout',
   data () {
@@ -68,6 +80,12 @@ export default {
     collapsedSider () {
       this.$refs.side1.toggleCollapse()
     }
+  },
+  created () {
+    console.log(Api)
+    Api.getMenuList().then((res) => {
+      console.log(res)
+    })
   }
 }
 </script>
@@ -126,4 +144,8 @@ export default {
       vertical-align: middle;
       font-size: 22px;
   }
+  // /deep/ .ivu-menu-submenu-title-icon {
+  //   color: red;
+  // }
+
 </style>

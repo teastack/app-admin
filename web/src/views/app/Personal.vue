@@ -46,7 +46,8 @@
 
 import moveIco from '@/components/app/move-ico'
 import { ImagePreview } from 'vant'
-import Api from '@/api'
+// import Api from '@/api'
+import Api from '@/api/app/app_api'
 import morenImg from '@/assets/images/timg.jpg'
 
 export default {
@@ -73,13 +74,13 @@ export default {
   methods: {
     init () {
       // 获取用户个人信息
-      Api.appApi.getUserInfo().then(res => {
+      Api.getUserInfo().then(res => {
         if (res.code === 200) {
           this.userInfo = res.data[0]
         }
       })
       // 获取用户个人留言列表
-      Api.appApi.getMssageOwn({pageSize: this.pageSize * this.page}).then(res => {
+      Api.getMssageOwn({pageSize: this.pageSize * this.page}).then(res => {
         if (res.code === 200) {
           this.total = res.data.count
           this.dataTotal = res.data.rows.length
@@ -139,7 +140,7 @@ export default {
       this.$dialog.confirm({
         message: '确定要删除吗？'
       }).then(() => {
-        Api.appApi.delMssageInfo({id: val}).then(res => {
+        Api.delMssageInfo({id: val}).then(res => {
           if (res.code === 200) {
             // 重置数据
             this.page = 1

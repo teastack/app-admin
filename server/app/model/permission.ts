@@ -8,14 +8,14 @@ module.exports = app => {
       primaryKey: true,
       autoIncrement: true,
     },
-    title: {
-      type: STRING,
-    },
-    url: {
+    name: {
       type: STRING,
     },
     status: {
       type: INTEGER,
+    },
+    level: {
+      type: STRING,
     },
     created_at: DATE,
     updated_at: DATE,

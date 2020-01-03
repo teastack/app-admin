@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from '../index'
 
 // 用户登录
 const login = (params) => {

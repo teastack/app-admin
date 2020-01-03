@@ -15,6 +15,7 @@ module.exports = app => {
     password: {
       type: STRING,
     },
+    stauts: INTEGER,
     created_at: DATE,
     updated_at: DATE,
     role_id: {

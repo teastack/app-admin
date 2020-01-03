@@ -28,7 +28,8 @@
 
 import moveIco from '@/components/app/move-ico'
 import messageInfo from '@/components/app/message-info'
-import Api from '@/api'
+// import Api from '@/api'
+import Api from '@/api/app/app_api'
 
 export default {
   name: 'app-home',
@@ -54,7 +55,7 @@ export default {
   methods: {
     // 获取留言列表
     getMessageList () {
-      Api.appApi.getMssageList({pageSize: this.pageSize * this.page}).then(res => {
+      Api.getMssageList({pageSize: this.pageSize * this.page}).then(res => {
         if (res.code === 200) {
           this.total = res.data.count
           this.dataTotal = res.data.rows.length

@@ -4,7 +4,7 @@
       <h2 class="h2">xxx后台管理系统</h2>
       <Form ref="formInline" :model="formInline" :rules="ruleInline">
           <FormItem prop="user">
-              <Input type="text" v-model.trim="formInline.user" placeholder="Username">
+              <Input type="text" v-model.trim="formInline.username" placeholder="Username">
                   <Icon type="ios-person-outline" slot="prepend"></Icon>
               </Input>
           </FormItem>
@@ -23,16 +23,18 @@
 
 <script>
 
+import Api from '@/api/admin/admin_api'
+
 export default {
   name: 'admin-login',
   data () {
     return {
       formInline: {
-        user: '123456',
+        username: 'admin',
         password: '123456'
       },
       ruleInline: {
-        user: [
+        username: [
           { required: true, message: '请输入用户名', trigger: 'blur' },
           { type: 'string', min: 6, max: 16, message: '用户不能小于6位', trigger: 'blur' },
           { validator: this.validator, trigger: 'blur' }
@@ -57,9 +59,16 @@ export default {
     handleSubmit (name) {
       this.$refs[name].validate((valid) => {
         if (valid) {
-          console.log(this.formInline)
-          this.$router.push({name: 'admin-index'})
-          this.$Message.success('Success!')
+          Api.goLogin(this.formInline).then(res => {
+            if (res.code === 200) {
+              // 储存token
+              localStorage.setItem('token', res.data.token)
+              this.$router.push({name: 'admin-home'})
+              this.$Message.success('Success!')
+            } else {
+              this.$Message.error(res.msg)
+            }
+          })
         } else {
           this.$Message.error('请填写完整信息!')
         }
