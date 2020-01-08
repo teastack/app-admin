@@ -24,9 +24,10 @@ module.exports = app => {
     },
   }, {
     freezeTableName: true,
+    timestamps: false, // 禁止查询时间
   });
-  Permission.associate = () => {
-    app.model.Permission.belongsTo(app.model.Permission, { as: 'permissions', foreignKey: 'permission_id' });
-  };
+  // Permission.associate = () => {
+  //   app.model.Permission.belongsTo(app.model.Permission, { as: 'permissions', foreignKey: 'permission_id' });
+  // };
   return Permission;
 };

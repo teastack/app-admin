@@ -16,6 +16,7 @@ module.exports = app => {
       updated_at: DATE,
     }, {
       freezeTableName: true,
+      timestamps: false, // 禁止查询时间
     });
     Role.associate = () => {
       app.model.Role.hasMany(app.model.AdminUser, { as: 'admin_user' });

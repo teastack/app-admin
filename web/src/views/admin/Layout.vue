@@ -2,35 +2,15 @@
     <div class="layout">
         <Layout>
             <Sider ref="side1" hide-trigger collapsible :collapsed-width="78" v-model="isCollapsed">
-                <Menu active-name="1-2" theme="dark" width="auto" :class="menuitemClasses" :accordion="accordion">
-                    <Submenu name="1">
+                <Menu theme="dark" ref="menu" width="auto" :class="menuitemClasses" :accordion="accordion">
+                    <Submenu :name="val.label" v-for="val in menuList" :key="val.label">
                         <template slot="title">
                             <Icon type="ios-navigate" />
-                            <span>订单管理</span>
+                            <span>{{val.name}}</span>
                         </template>
-                        <MenuItem name="1-1">
+                        <MenuItem :name="val2.label" v-for="val2 in val.children" :key="val2.label">
                             <Icon type="ios-paper"></Icon>
-                            <span>订单列表</span>
-                        </MenuItem>
-                    </Submenu>
-                    <Submenu name="2">
-                        <template slot="title">
-                            <Icon type="ios-search" />
-                            <span>商品管理</span>
-                        </template>
-                        <MenuItem name="2-1">
-                            <Icon type="ios-paper"></Icon>
-                            <span>商品列表</span>
-                        </MenuItem>
-                    </Submenu>
-                    <Submenu name="3">
-                        <template slot="title">
-                            <Icon type="ios-settings" />
-                            <span>角色管理</span>
-                        </template>
-                        <MenuItem name="3-1">
-                            <Icon type="ios-paper"></Icon>
-                            <span>角色列表</span>
+                            <span>{{val2.name}}</span>
                         </MenuItem>
                     </Submenu>
                 </Menu>
@@ -59,6 +39,7 @@ export default {
   data () {
     return {
       isCollapsed: false,
+      menuList: [],
       accordion: true
     }
   },
@@ -82,9 +63,11 @@ export default {
     }
   },
   created () {
-    console.log(Api)
     Api.getMenuList().then((res) => {
       console.log(res)
+      if (res.code === 200) {
+        this.menuList = res.data
+      }
     })
   }
 }
