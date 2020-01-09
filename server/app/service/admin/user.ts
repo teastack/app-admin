@@ -1,4 +1,5 @@
 import { Service } from 'egg';
+import { __assign } from 'tslib';
 
 export default class AdminUser extends Service {
 
@@ -11,6 +12,9 @@ export default class AdminUser extends Service {
                 username: parameter.username,
                 stauts: 1,
             },
+            include: {
+                model: this.app.model.Role,
+            },
           }).then(res => {
             if (res && res.length > 0) {
                 const pass_word = this.ctx.encryption(parameter.password);
@@ -19,6 +23,7 @@ export default class AdminUser extends Service {
                 } else {
                     const data = {
                         token: this.ctx.generateToken(res),
+                        userinfo: res[0],
                     };
                     this.ctx.body = this.ctx.rendata(200, data, '登录');
                 }

@@ -1,28 +1,49 @@
 <template>
     <div class="layout">
         <Layout>
+            <!-- 左边菜单栏 -->
             <Sider ref="side1" hide-trigger collapsible :collapsed-width="78" v-model="isCollapsed">
-                <Menu theme="dark" ref="menu" width="auto" :class="menuitemClasses" :accordion="accordion">
-                    <Submenu :name="val.label" v-for="val in menuList" :key="val.label">
-                        <template slot="title">
-                            <Icon type="ios-navigate" />
-                            <span>{{val.name}}</span>
-                        </template>
-                        <MenuItem :name="val2.label" v-for="val2 in val.children" :key="val2.label">
-                            <Icon type="ios-paper"></Icon>
-                            <span>{{val2.name}}</span>
+                <Menu theme="dark" ref="menu" width="auto" :active-name="activename" :open-names="$store.state.opennames" :class="menuitemClasses" :accordion="accordion">
+                    <template v-for="val in router">
+                        <MenuItem v-if="val.children.length < 1" :name="val.name" :key="val.name" @click.native="goPath(val.name, val.name)">
+                            <Icon type="ios-paper" :key="'2' + val.name"></Icon>
+                            <span :key="'3' + val.name">{{ val.meta.title }}</span>
                         </MenuItem>
-                    </Submenu>
+                        <Submenu :name="val.name" v-if="val.children.length >= 1" :key="val.name">
+                            <template slot="title">
+                                <Icon type="ios-navigate" />
+                                <span>{{val.meta.title}}</span>
+                            </template>
+                            <MenuItem :name="val2.name" v-for="val2 in val.children" :key="val2.name" @click.native="goPath(val2.name, val.name)">
+                                <Icon type="ios-paper"></Icon>
+                                <span>{{val2.meta.title}}</span>
+                            </MenuItem>
+                        </Submenu>
+                    </template>
                 </Menu>
             </Sider>
             <Layout>
+              <!-- 个人logo -->
                 <Header :style="{padding: 0}" class="layout-header-bar">
-                    <Icon @click.native="collapsedSider" :class="rotateIcon" :style="{margin: '0 20px'}" type="md-menu" size="24"></Icon>
+                    <Icon @click.native="collapsedSider" :class="rotateIcon" :style="{margin: '0 10px'}" type="md-menu" size="24"></Icon>
                     <router-link to="/admin/login">
                       <Button type="info" >退出</Button>
                     </router-link>
                 </Header>
-                <Content :style="{margin: '20px', background: '#fff', minHeight: '260px'}">
+                <!-- 面包屑 -->
+                <Breadcrumb style="margin:10px">
+                    <BreadcrumbItem to="/admin/layout/home">
+                        <Icon type="ios-home-outline"></Icon> Home
+                    </BreadcrumbItem>
+                    <BreadcrumbItem to="/admin/layout/role_list">
+                        <Icon type="logo-buffer"></Icon> 角色列表
+                    </BreadcrumbItem>
+                    <BreadcrumbItem>
+                        <Icon type="ios-cafe"></Icon> Breadcrumb
+                    </BreadcrumbItem>
+                </Breadcrumb>
+                <!-- 路由模板 -->
+                <Content :style="{margin: '0 10px', background: '#fff', minHeight: '260px'}">
                   <router-view/>
                 </Content>
             </Layout>
@@ -40,7 +61,9 @@ export default {
     return {
       isCollapsed: false,
       menuList: [],
-      accordion: true
+      accordion: true,
+      router: [],
+      activename: ''
     }
   },
   computed: {
@@ -60,15 +83,74 @@ export default {
   methods: {
     collapsedSider () {
       this.$refs.side1.toggleCollapse()
+    },
+    goPath (val, name) {
+      if (this.activename === val) {
+        return false
+      }
+      this.$store.state.opennames = [name]
+      this.activename = this.$store.state.rouetr = val
+      this.$router.push({name: val})
     }
   },
   created () {
     Api.getMenuList().then((res) => {
-      console.log(res)
       if (res.code === 200) {
-        this.menuList = res.data
+        let PermissionList = res.data
+        let rootPermissionsResult = {}
+        // 处理第一级菜单
+        for (const key in PermissionList) {
+          if (PermissionList.hasOwnProperty(key)) {
+            const permission = PermissionList[key]
+            if (permission.permission_id === 0) {
+              rootPermissionsResult[permission.id] = {
+                label: permission.id,
+                name: permission.name,
+                children: []
+              }
+            }
+          }
+        }
+        // 处理第二级
+        for (const key in PermissionList) {
+          if (PermissionList.hasOwnProperty(key)) {
+            const permission = PermissionList[key]
+            if (permission.level === '1') {
+              const parentPermissionResult = rootPermissionsResult[permission.permission_id]
+              if (parentPermissionResult) {
+                parentPermissionResult.children.push({
+                  label: permission.id,
+                  name: permission.name,
+                  children: []
+                })
+              }
+            }
+          }
+        }
+        rootPermissionsResult = Object.values(rootPermissionsResult)
+        this.menuList = rootPermissionsResult
       }
     })
+    // 获取管理后台路由表
+    for (const key in this.$router.options.routes) {
+      if (this.$router.options.routes.hasOwnProperty(key)) {
+        if (this.$router.options.routes[key].path === '/admin') {
+          for (const key2 in this.$router.options.routes[key].children) {
+            if (this.$router.options.routes[key].children.hasOwnProperty(key2)) {
+              if (this.$router.options.routes[key].children[key2].path === 'layout') {
+                this.router = this.$router.options.routes[key].children[key2].children
+              }
+            }
+          }
+        }
+      }
+    }
+    this.activename = this.$store.state.rouetr ? this.$store.state.rouetr : 'admin-home'
+    this.$router.push({name: this.$store.state.rouetr})
+  },
+  destroyed () {
+    this.activename = this.$store.state.rouetr = 'admin-home'
+    this.$store.state.opennames = ['admin-home']
   }
 }
 </script>

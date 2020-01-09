@@ -4,7 +4,14 @@ import app from './app/app_router' // app的路由模块
 import admin from './admin/admin_router' // 管理后台的路由模块
 import pc from './pc/pc_router' // pc端的路由模块
 
-// console.log(admin)
+/**
+ * 重写路由的push方法
+ */
+const routerPush = Router.prototype.push
+Router.prototype.push = function push (location) {
+  return routerPush.call(this, location).catch(error => error)
+}
+
 Vue.use(Router)
 
 export default new Router({

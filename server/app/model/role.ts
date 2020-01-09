@@ -12,14 +12,17 @@ module.exports = app => {
       status: {
         type: INTEGER,
       },
+      permission_id: {
+        type: STRING,
+      },
       created_at: DATE,
       updated_at: DATE,
     }, {
-      freezeTableName: true,
+      // freezeTableName: true,
       timestamps: false, // 禁止查询时间
     });
     Role.associate = () => {
-      app.model.Role.hasMany(app.model.AdminUser, { as: 'admin_user' });
+      app.model.Role.hasMany(app.model.AdminUser, { foreignKey: 'role_id' });
     };
     return Role;
   };

@@ -1,16 +1,16 @@
 <template>
-  <div class="hello">
-    <h1>欢迎来到XX后台管理系统</h1>
+  <div class="role_list">
+    <h1>用户列表</h1>
   </div>
 </template>
 
 <script>
 
 export default {
-  name: 'admin-home',
+  name: 'role-list',
   data () {
     return {
-      msg: 'admin首页'
+      msg: ''
     }
   },
   mounted () {

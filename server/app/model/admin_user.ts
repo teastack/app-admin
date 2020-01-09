@@ -18,15 +18,13 @@ module.exports = app => {
     stauts: INTEGER,
     created_at: DATE,
     updated_at: DATE,
-    role_id: {
-      type: INTEGER,
-    },
+    role_id: INTEGER,
   }, {
-    freezeTableName: true,
+    // freezeTableName: true,
     timestamps: false, // 禁止查询时间
   });
-  // AdminUser.associate = () => {
-  //   app.model.AdminUser.belongsTo(app.model.Role, { as: 'role' });
-  // };
+  AdminUser.associate = () => {
+    app.model.AdminUser.belongsTo(app.model.Role, { foreignKey: 'role_id' });
+  };
   return AdminUser;
 };

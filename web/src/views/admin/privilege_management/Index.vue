@@ -1,16 +1,16 @@
 <template>
-  <div class="hello">
-    <h1>欢迎来到XX后台管理系统</h1>
+  <div class="privilege-management">
+    <router-view/>
   </div>
 </template>
 
 <script>
 
 export default {
-  name: 'admin-home',
+  name: 'privilege-management',
   data () {
     return {
-      msg: 'admin首页'
+      msg: ''
     }
   },
   mounted () {

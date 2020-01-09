@@ -4,7 +4,7 @@ module.exports = app => {
       id: {
         type: INTEGER,
         autoIncrement: true,
-        primaryKey: true, // uid为主键
+        primaryKey: true,
       },
       uid: INTEGER,
       message: STRING,
