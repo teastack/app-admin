@@ -7,10 +7,19 @@ const getUserList = (params) => {
 }
 
 /*
-* 获取菜单列表
+* 获取权限列表
 */
 const getMenuList = (params) => {
   return axios.get('admin/home', params).then((result) => {
+    return result.data
+  })
+}
+
+/*
+* 获取角色列表
+*/
+const getRoleList = (params) => {
+  return axios.get('admin/home/role_list', params).then((result) => {
     return result.data
   })
 }
@@ -27,5 +36,6 @@ const goLogin = (params) => {
 export default {
   goLogin,
   getUserList,
-  getMenuList
+  getMenuList,
+  getRoleList
 }

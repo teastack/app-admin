@@ -9,6 +9,9 @@ module.exports = app => {
       name: {
         type: STRING,
       },
+      desc: {
+        type: STRING,
+      },
       status: {
         type: INTEGER,
       },

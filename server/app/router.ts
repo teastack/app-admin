@@ -15,6 +15,7 @@ export default (app: Application) => {
 
   // admin
   router.post('/admin/login', controller.admin.user.userLogin); // 登录
-  router.get('/admin/home', jwt, controller.admin.home.index); // 获取管理系统操作菜单
+  router.get('/admin/home', jwt, controller.admin.home.permissionList); // 获取权限列表
+  router.get('/admin/home/role_list', jwt, controller.admin.home.roleList); // 获取角色列表
   router.get('/user_list', jwt, controller.admin.user.userList);
 };

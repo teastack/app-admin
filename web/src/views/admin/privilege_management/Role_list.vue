@@ -1,17 +1,25 @@
 <template>
   <div class="role_list">
-    <h1>角色列表</h1>
   </div>
 </template>
 
 <script>
 
+import Api from '@/api/admin/admin_api'
+
 export default {
   name: 'role-list',
   data () {
     return {
-      msg: ''
+      roleList: []
     }
+  },
+  created () {
+    Api.getRoleList().then(res => {
+      if (res.code === 200) {
+        this.roleList = res.data
+      }
+    })
   },
   mounted () {
   }
@@ -20,4 +28,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
+    .expand-row{
+        margin-bottom: 16px;
+    }
 </style>
