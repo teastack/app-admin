@@ -31,7 +31,7 @@
                     </router-link>
                 </Header>
                 <!-- 面包屑 -->
-                <Breadcrumb style="margin:10px">
+                <!-- <Breadcrumb style="margin:10px">
                     <BreadcrumbItem to="/admin/layout/home">
                         <Icon type="ios-home-outline"></Icon> Home
                     </BreadcrumbItem>
@@ -41,9 +41,9 @@
                     <BreadcrumbItem>
                         <Icon type="ios-cafe"></Icon> Breadcrumb
                     </BreadcrumbItem>
-                </Breadcrumb>
+                </Breadcrumb> -->
                 <!-- 路由模板 -->
-                <Content :style="{margin: '0 10px', background: '#fff', minHeight: '260px'}">
+                <Content :style="{margin: '10px', background: '#fff', minHeight: '260px'}">
                   <router-view/>
                 </Content>
             </Layout>

@@ -12,9 +12,11 @@ export default class AdminUser extends Service {
                 username: parameter.username,
                 stauts: 1,
             },
-            include: {
+            attributes: [ 'id', 'username', 'password', 'stauts', 'role_id' ],
+            include: [{
                 model: this.app.model.Role,
-            },
+                attributes: [ 'id', 'name', 'status', 'permission_id' ],
+            }],
           }).then(res => {
             if (res && res.length > 0) {
                 const pass_word = this.ctx.encryption(parameter.password);
@@ -23,7 +25,13 @@ export default class AdminUser extends Service {
                 } else {
                     const data = {
                         token: this.ctx.generateToken(res),
-                        userinfo: res[0],
+                        userinfo: {
+                            username: res[0].username,
+                            role: {
+                                name: res[0].role.name,
+                                permission_id: res[0].role.permission_id,
+                            },
+                        },
                     };
                     this.ctx.body = this.ctx.rendata(200, data, '登录');
                 }

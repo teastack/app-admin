@@ -63,6 +63,7 @@ export default {
             if (res.code === 200) {
               // 储存token
               localStorage.setItem('token', res.data.token)
+              this.$store.state.userInfo = res.data.userinfo
               this.$router.push({name: 'admin-home'})
               this.$Message.success('Success!')
             } else {

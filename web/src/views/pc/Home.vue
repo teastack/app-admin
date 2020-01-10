@@ -2,7 +2,7 @@
   <div class="pc-home">
     风沙渡，理想家园...
 
-    <router-link to='/admin/home'>
+    <router-link to='/admin/layout/home'>
         <Button type="success" >进入后台系统</Button>
     </router-link>
   </div>
