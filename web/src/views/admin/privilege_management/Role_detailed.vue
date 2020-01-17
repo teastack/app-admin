@@ -1,45 +1,24 @@
 <template>
   <div class="role_list">
     <div>
-        <!-- <Row class="expand-row">
-            <Col span="8">
-                <span class="expand-key">Job: </span>
-                <span class="expand-value">{{ row.job }}</span>
+        <Row v-for="val in row.permissionList" :key="val.label">
+            <Col span="4">
+                <Tag type="dot" closable color="primary" @on-close="handleClose">{{val.name}}</Tag>
+                <Icon type="md-arrow-dropright" v-if='val.children.length !== 0'/>
             </Col>
-            <Col span="8">
-                <span class="expand-key">Interest: </span>
-                <span class="expand-value">{{ row.interest }}</span>
-            </Col>
-            <Col span="8">
-                <span class="expand-key">Birthday: </span>
-                <span class="expand-value">{{ row.birthday }}</span>
+            <Col span="20">
+                <Row  v-for="val2 in val.children" :key="val2.label">
+                    <Col span="4">
+                      <Tag type="dot" closable color="success">{{val2.name}}</Tag>
+                      <Icon type="md-arrow-dropright" v-if='val2.children.length !== 0'/>
+                    </Col>
+                    <Col span="20">
+                        <Tag type="dot" v-for="val3 in val2.children" :key="val3.label" closable color="warning">{{val3.name}}</Tag>
+                    </Col>
+                </Row>
             </Col>
         </Row>
-        <Row>
-            <Col span="8">
-                <span class="expand-key">Favorite book: </span>
-                <span class="expand-value">《{{ row.book }}》</span>
-            </Col>
-            <Col span="8">
-                <span class="expand-key">Favorite movie: </span>
-                <span class="expand-value">{{ row.movie }}</span>
-            </Col>
-            <Col span="8">
-                <span class="expand-key">Favorite music: </span>
-                <span class="expand-value">{{ row.music }}</span>
-            </Col>
-        </Row> -->
-        <div class="tag">
-            <div class="tag1">
-            <Tag type="dot" closable color="primary" @on-close="handleClose">标签一</Tag>
-            </div>
-            <div class="tag2">
-            <Tag type="dot" closable color="success">标签二</Tag>
-            </div>
-            <div class="tag3">
-            <Tag type="dot" closable color="warning">标签三</Tag>
-            </div>
-        </div>
+        <span v-if='row.permissionList.length === 0'>该角色还没有分配任何的权限</span>
     </div>
   </div>
 </template>
@@ -62,6 +41,7 @@ export default {
   methods: {
     handleClose () {
       console.log('关闭')
+      console.log(this.row)
     }
   }
 }
@@ -69,10 +49,4 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
-    .expand-row{
-        margin-bottom: 16px;
-    }
-    .tag {
-        display: flex
-    }
 </style>

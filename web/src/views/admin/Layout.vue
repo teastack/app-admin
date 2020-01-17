@@ -96,6 +96,7 @@ export default {
   created () {
     Api.getMenuList().then((res) => {
       if (res.code === 200) {
+        this.$store.state.PermissionList = res.data
         let PermissionList = res.data
         let rootPermissionsResult = {}
         // 处理第一级菜单

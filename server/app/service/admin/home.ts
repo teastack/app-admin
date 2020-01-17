@@ -5,7 +5,12 @@ export default class AdminHome extends Service {
     // 获取权限列表
     async getMenuList() {
         // 获取权限列表
-        await this.ctx.model.Permission.findAll().then(res => {
+        await this.ctx.model.Permission.findAll({
+            where: {
+                status: 1,
+            },
+            attributes: [ 'id', 'name', 'level', 'permission_id' ],
+        }).then(res => {
             this.ctx.body = this.ctx.rendata(200, res, '获取权限列表');
         }).catch(err => {
             throw err;
